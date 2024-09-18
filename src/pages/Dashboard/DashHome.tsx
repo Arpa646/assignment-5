@@ -10,7 +10,7 @@ import { useState } from "react";
 import { FaBuilding, FaUserCog, FaClipboardList } from "react-icons/fa";
 import { MdAddCircleOutline } from "react-icons/md";
 import {
-  useGetAllBookingsQresultuery,
+  useGetAllBookingsQuery,
   useGetFacilityPerUserQuery,
   useGetUserQuery,
 } from "@/redux/api/api"; // Import the queries
@@ -27,7 +27,7 @@ export default function AdminDashboard() {
   const {
     data: allBookings,
     isLoading: allBookingsLoading,
-  } = useGetAllBookingsQresultuery();
+  } = useGetAllBookingsQuery();
   
   const {
     data: userBookings,
@@ -41,8 +41,8 @@ export default function AdminDashboard() {
   // Extract booked dates based on role
   const bookedDates: Date[] =
     role === "admin"
-      ? allBookings?.map((booking: any) => new Date(booking.date)) || []
-      : userBookings?.map((booking: any) => new Date(booking.date)) || [];
+      ? allBookings?.data.map((booking: any) => new Date(booking.date)) || []
+      : userBookings?.data.map((booking: any) => new Date(booking.date)) || [];
 
   // Function to add the class to booked dates
   const dayClassName = (date: Date): string | undefined => {

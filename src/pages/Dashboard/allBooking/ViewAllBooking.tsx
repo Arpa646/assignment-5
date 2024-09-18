@@ -8,7 +8,7 @@ import {
   TableCell,
   Chip,
 } from "@nextui-org/react";
-import { useGetAllBookingsQresultuery } from "@/redux/api/api"; // Fixed typo here
+import { useGetAllBookingsQuery } from "@/redux/api/api"; // Fixed typo here
 
 // Mapping for booking status colors
 const statusColorMap: { [key: string]: "success" | "warning" | "danger" } = {
@@ -19,7 +19,7 @@ const statusColorMap: { [key: string]: "success" | "warning" | "danger" } = {
 
 export default function ViewAllBooking() {
   // Fetch booking data from the API
-  const { data: bookingData, isLoading, error } = useGetAllBookingsQresultuery({});
+  const { data: bookingData, isLoading, error } = useGetAllBookingsQuery({});
 
   // Handle loading and error states
   if (isLoading) return <p>Loading...</p>;

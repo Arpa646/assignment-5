@@ -137,7 +137,7 @@ export const baseApi = createApi({
 
 export const {
   useGetSingleFacilityQuery,
-  useGetAllBookingsQresultuery,
+  useGetAllBookingsQuery,
   useCancelBookingMutation,
   useGetFacilitiesQuery,
   useAddFacilityMutation,

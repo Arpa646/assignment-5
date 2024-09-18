@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+
 import { useGetSingleFacilityQuery } from "@/redux/api/api";
 import { useParams } from "react-router-dom";
 import { NavLink } from "react-router-dom";
@@ -14,7 +14,7 @@ export default function FacilityDetails() {
 
   console.log(facility);
 
-  const [, setAlert] = useState(false);
+
 
   if (isLoading) {
     return (

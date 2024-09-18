@@ -1,12 +1,9 @@
 // src/types.ts
-export interface TPlant {
-  _id?: string;
-  title: string;
+export interface TFacility {
+  _id?: string; // Optional, for cases where the facility might not yet have an ID
+  name: string;
   description: string;
-  price: number;
-  rating?: number;
-  category: string;
-  imageUrl: string;
-  quantity: number;
-  stock?: number; // Ensure stock is included
+  pricePerHour: number;
+  location: string;
+  image?: string; // Optional, in case the image URL is not always provided
 }

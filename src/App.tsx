@@ -1,6 +1,6 @@
 
 import "./index.css";
-import {useEffect } from "react";
+
 
 import router from "./router/index.tsx";
 import { Toaster } from "sonner";

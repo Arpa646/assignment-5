@@ -2,8 +2,13 @@ import { useGetFacilitiesQuery } from "@/redux/api/api"; // Update to facility q
 import { Link } from "react-router-dom";
 
 export default function FacilityHome() {
-  const { data: facilitiesData, isLoading, error } = useGetFacilitiesQuery({}); // Fetching facility data
-
+  const {
+    data: facilitiesDataresult,
+    isLoading,
+    error,
+  } = useGetFacilitiesQuery({}); // Fetching facility data
+  const facilitiesData = facilitiesDataresult?.data;
+  console.log(facilitiesData);
   if (isLoading) {
     return <p className="text-center text-white">Loading facilities...</p>;
   }

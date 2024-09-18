@@ -10,7 +10,7 @@ import { useState } from "react";
 import { FaBuilding, FaUserCog, FaClipboardList } from "react-icons/fa";
 import { MdAddCircleOutline } from "react-icons/md";
 import {
-  useGetAllBookingsQuery,
+  useGetAllBookingsQresultuery,
   useGetFacilityPerUserQuery,
   useGetUserQuery,
 } from "@/redux/api/api"; // Import the queries
@@ -27,11 +27,11 @@ export default function AdminDashboard() {
   const {
     data: allBookings,
     isLoading: allBookingsLoading,
-  } = useGetAllBookingsQuery();
+  } = useGetAllBookingsQresultuery();
   
   const {
     data: userBookings,
-    error: userBookingsError,
+  
     isLoading: userBookingsLoading,
   } = useGetFacilityPerUserQuery(id); // Pass the id (user email) as the argument
 

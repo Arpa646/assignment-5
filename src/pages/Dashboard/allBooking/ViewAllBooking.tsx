@@ -8,10 +8,10 @@ import {
   TableCell,
   Chip,
 } from "@nextui-org/react";
-import { useGetAllBookingsQuery } from "@/redux/api/api";
+import { useGetAllBookingsQresultuery } from "@/redux/api/api"; // Fixed typo here
 
 // Mapping for booking status colors
-const statusColorMap = {
+const statusColorMap: { [key: string]: "success" | "warning" | "danger" } = {
   confirmed: "success",
   pending: "warning",
   canceled: "danger",
@@ -19,7 +19,7 @@ const statusColorMap = {
 
 export default function ViewAllBooking() {
   // Fetch booking data from the API
-  const { data: bookingData, isLoading, error } = useGetAllBookingsQuery({});
+  const { data: bookingData, isLoading, error } = useGetAllBookingsQresultuery({});
 
   // Handle loading and error states
   if (isLoading) return <p>Loading...</p>;
@@ -27,10 +27,9 @@ export default function ViewAllBooking() {
 
   // Render the table with booking data
   return (
-    <Table className="border" aria-label="Bookings table">
-      <TableHeader className="border">
+    <Table aria-label="Bookings table">
+      <TableHeader>
         <TableColumn>Facility Name</TableColumn>
-
         <TableColumn>Location</TableColumn>
         <TableColumn>Price/Hour</TableColumn>
         <TableColumn>Date</TableColumn>
@@ -42,38 +41,30 @@ export default function ViewAllBooking() {
         <TableColumn>Payable Amount</TableColumn>
         <TableColumn>Status</TableColumn>
       </TableHeader>
-      <TableBody items={bookingData?.data || []}>
-        {(item) => (
-          <TableRow className="border" key={item._id}>
-            <TableCell className="border"> {item.facility.name}</TableCell>
-
-            <TableCell className="border-black">
-              {item.facility.location}
-            </TableCell>
-            <TableCell className="border-black">
-              {item.facility.pricePerHour}
-            </TableCell>
-            <TableCell className="border-black">
-              {new Date(item.date).toLocaleDateString()}
-            </TableCell>
-            <TableCell className="border-black">{item.startTime}</TableCell>
-            <TableCell className="border-black">{item.endTime}</TableCell>
-            <TableCell className="border-black">{item.user.name}</TableCell>
-            <TableCell className="border-black">{item.user.email}</TableCell>
-            <TableCell className="border-black">{item.user.phone}</TableCell>
-            <TableCell className="border-black">{item.payableAmount}</TableCell>
-            <TableCell className="border-black">
+      <TableBody>
+        {bookingData?.data?.map((item) => (
+          <TableRow key={item._id}>
+            <TableCell>{item.facility.name}</TableCell>
+            <TableCell>{item.facility.location}</TableCell>
+            <TableCell>{item.facility.pricePerHour}</TableCell>
+            <TableCell>{new Date(item.date).toLocaleDateString()}</TableCell>
+            <TableCell>{item.startTime}</TableCell>
+            <TableCell>{item.endTime}</TableCell>
+            <TableCell>{item.user.name}</TableCell>
+            <TableCell>{item.user.email}</TableCell>
+            <TableCell>{item.user.phone}</TableCell>
+            <TableCell>{item.payableAmount}</TableCell>
+            <TableCell>
               <Chip
-                className="capitalize"
-                color={statusColorMap[item.isBooked]}
+                color={statusColorMap[item.status]} // Assuming item.status is used for status
                 size="sm"
                 variant="flat"
               >
-                {item.isBooked}
+                {item.status}
               </Chip>
             </TableCell>
           </TableRow>
-        )}
+        ))}
       </TableBody>
     </Table>
   );

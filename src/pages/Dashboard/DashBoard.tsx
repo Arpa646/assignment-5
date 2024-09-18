@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { verifyToken } from "@/utils/verify";
 import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FaBars } from "react-icons/fa"; // Importing the menu bar icon
-
+import { RootState } from "@/redux/store"; 
 const DashBoard = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+   interface JwtPayload {
+  role: string;
+  // Add other properties if needed
+}
+
+
   const token = useSelector((state: RootState) => state.auth.token);
   const user = verifyToken(token);
-  const role = user.role;
+  const role = user.role
 
   // Toggle sidebar
   const toggleSidebar = () => {

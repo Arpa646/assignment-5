@@ -141,7 +141,7 @@ const FacilityList = () => {
           <div className="my-5 p-3">
             <div className="facility-category-section">
               <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-10 mx-auto my-5">
-                { currentPosts?.map((facility: TFacility) => (
+                {currentPosts?.map((facility: TFacility) => (
                   <FacilityCard key={facility._id} facility={facility} />
                 ))}
               </div>

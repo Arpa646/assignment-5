@@ -6,7 +6,7 @@ import {
   useUpdateFacilityMutation,
 } from "@/redux/api/api";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+
 import Swal from "sweetalert2";
 import {
   Button,
@@ -32,7 +32,8 @@ export type Facility = {
 };
 
 const FacilityManagement = () => {
-  const token = useSelector((state: RootState) => state.auth.token);
+  // const token = useSelector((state: RootState) => state.auth.token);
+  
   const { data: facilitiesData } = useGetFacilitiesQuery({});
 
   const [deleteFacility] = useDeleteFacilityMutation();
@@ -265,7 +266,7 @@ const FacilityManagement = () => {
               facilitiesData.data?.map((facility: Facility) => (
                 <tr key={facility._id}>
                   <td className="px-6 py-4 whitespace-nowrap">
-                   <img src= {facility.image} alt="" srcset="" />
+                   <img src= {facility.image} alt=""  />
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {facility.name}

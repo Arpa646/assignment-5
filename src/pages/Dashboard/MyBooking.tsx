@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+
+
 import {
   useGetFacilityPerUserQuery,
   useCancelBookingMutation,
 } from "@/redux/api/api"; // Update this with your booking-related API hooks
 import Swal from "sweetalert2";
-import toast from "react-hot-toast";
+
 import {
   Button,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
+
+  
+
 } from "@nextui-org/react";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 
@@ -34,7 +33,7 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 // };
 
 const BookingTable = () => {
-  const { data: bookingsData, error } = useGetFacilityPerUserQuery({});
+  const { data: bookingsData } = useGetFacilityPerUserQuery({});
   const [cancelBooking] = useCancelBookingMutation();
   console.log("test", bookingsData && bookingsData);
   const handleCancel = (id: string) => {

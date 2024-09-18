@@ -1,10 +1,10 @@
-import React from "react";
+
 import {
-  FaFacebookF,
+ 
   FaTwitter,
   FaYoutube,
   FaInstagram,
-  FaPinterest,
+ 
 } from "react-icons/fa";
 const AboutUsSection = () => {
   return (

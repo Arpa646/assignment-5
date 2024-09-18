@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { TFacility } from "../../types/index"; // Assuming you have TFacility defined
+import { TFacility } from "@/types/index"; // Assuming you have TFacility defined
 
 interface FacilityCardProps {
   facility: TFacility;

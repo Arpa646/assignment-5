@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+
+
 import { useSignUpMutation } from "@/redux/api/api"; // Import your mutation hook
 
 const AddAdmin: React.FC = () => {

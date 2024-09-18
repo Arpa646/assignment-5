@@ -235,3 +235,169 @@ export default Booking;
 //           Check Availability
 //         </button>
 //       </form> */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState } from "react";
+// import {
+//   useCheckAvailabilityQuery,
+//   useAddBookingMutation,
+// } from "@/redux/api/api"; // Import mutation hook
+// import { useNavigate } from "react-router-dom"; // For navigation to booking confirmation
+
+// const Booking = () => {
+//   const [date, setDate] = useState<string>(""); // State to store selected date
+//   const [selectedSlot, setSelectedSlot] = useState<{
+//     startTime: string;
+//     endTime: string;
+//   } | null>(null); // State for selected slot
+//   const facilityId = "668947f90da1ea65db195306"; // Facility ID (replace with dynamic value if needed)
+//   const navigate = useNavigate();
+//    // To navigate to booking confirmation page
+// console.log(date)
+//   // Use the query hook with the date parameter and skip fetching if date is not provided
+//   const { data, error, isLoading } = useCheckAvailabilityQuery(date);
+//   console.log("available dates", error);
+
+//   // Mutation hook to add booking
+//   const [
+//     addBooking,
+//     { isLoading: bookingLoading, error: bookingError },
+//   ] = useAddBookingMutation();
+
+//   // Handle date change
+//   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setDate(e.target.value);
+//   };
+
+//   // Handle slot selection and log the selected slot times
+//   const handleSlotSelection = (slot: {
+//     startTime: string;
+//     endTime: string;
+//   }) => {
+//     setSelectedSlot(slot);
+//     console.log(
+//       `Selected Slot: Start Time - ${slot.startTime}, End Time - ${slot.endTime}`
+//     );
+//   };
+
+//   // Confirm booking using mutation
+//   const handleConfirmBooking = async () => {
+//     if (selectedSlot) {
+//       const bookingData = {
+//         booking: {
+//           facility: facilityId, // Set the facility ID
+//           date: date, // Selected date
+//           startTime: selectedSlot.startTime, // Selected slot start time
+//           endTime: selectedSlot.endTime, // Selected slot end time
+//         },
+//       };
+
+//       console.log(bookingData);
+//       try {
+//         // Call the mutation to add booking
+//         const response = await addBooking(bookingData).unwrap(); // Unwrap the result to handle the response
+//         console.log("Booking Success:", response);
+
+//         // Navigate to the booking confirmation page
+//         navigate(`/confirm-booking`, { state: bookingData });
+//       } catch (err) {
+//         console.error("Booking Error:", err);
+//       }
+//     } else {
+//       alert("Please select a slot.");
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <div className="bg-white shadow-lg w-2/4 mx-auto mt-8 p-6 rounded-lg">
+//         <h1 className="text-3xl font-bold text-center mb-4">Booking Page</h1>
+
+//         <div style={{ border: "1px solid #A18549" }} className="mb-4">
+//           <input
+//             className="border px-4 py-2 w-full"
+//             type="date"
+//             value={date}
+//             onChange={handleDateChange}
+//             placeholder="Select Date"
+//           />
+//         </div>
+
+//         <button
+//           style={{ border: "1px solid #A18549" }}
+//           className="text-black px-4 py-2 mb-4"
+//           onClick={() => setDate(date)} // Trigger query when date is set
+//         >
+//           Check Availability
+//         </button>
+
+//         {isLoading && <p>Loading...</p>}
+//         {error && <p>Error checking availability</p>}
+//         {data && data.data && data.data.length > 0 && (
+//           <div>
+//             <h2 className="text-xl mb-2">
+//               Available Slots <br />
+//               You can directly book for this date by selecting any slot
+//             </h2>
+//             <div className="grid grid-cols-2 gap-4">
+//               {data.data.map(
+//                 (
+//                   slot: { startTime: string; endTime: string },
+//                   index: number
+//                 ) => (
+//                   <button
+//                     style={{ border: "1px solid #A18549" }}
+//                     key={index}
+//                     className={`border px-4 py-2 ${
+//                       selectedSlot?.startTime === slot.startTime &&
+//                       selectedSlot?.endTime === slot.endTime
+//                         ? "bg-[#A18549] text-white"
+//                         : "bg-white text-[#A18549]"
+//                     }`}
+//                     onClick={() => handleSlotSelection(slot)}
+//                   >
+//                     {slot.startTime} - {slot.endTime}
+//                   </button>
+//                 )
+//               )}
+//             </div>
+//           </div>
+//         )}
+
+//         {selectedSlot && (
+//           <div className="mt-4">
+//             <h3 className="text-lg font-semibold">
+//               Selected Slot: {selectedSlot.startTime} - {selectedSlot.endTime}
+//             </h3>
+//             <button
+//               className="bg-[#A18549] text-white px-4 py-2 rounded-lg mt-2"
+//               onClick={handleConfirmBooking}
+//               disabled={bookingLoading} // Disable button while booking
+//             >
+//               {bookingLoading ? "Booking..." : "Confirm Booking"}
+//             </button>
+//             {bookingError && (
+//               <p className="text-red-500">Error occurred while booking.</p>
+//             )}
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Booking;

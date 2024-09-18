@@ -1,0 +1,5 @@
+/* styles/globals.css or a similar file */
+.highlighted-date {
+    @apply bg-yellow-300 text-black !important; /* Tailwind utility classes for yellow background and black text */
+  }
+  

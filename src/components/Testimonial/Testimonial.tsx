@@ -69,11 +69,15 @@ export default function FacilityTestimonial() {
         freeMode={true}
         pagination={{ clickable: true }}
         modules={[FreeMode, Pagination]}
-        className="mySwiper "
+        className="mySwiper"
         breakpoints={{
-          640: {
+          320: {
             slidesPerView: 1,
             spaceBetween: 10,
+          },
+          640: {
+            slidesPerView: 1,
+            spaceBetween: 20,
           },
           768: {
             slidesPerView: 2,
@@ -86,21 +90,25 @@ export default function FacilityTestimonial() {
         }}
       >
         {facilityTestimonials.map((testimonial, index) => (
-          <SwiperSlide className="p-9" key={index}>
-            <div className="shadow-lg rounded-lg p-6 text-center">
-              <div className="text-orange-300 mb-4 text-xl">
+          <SwiperSlide className="p-4" key={index}>
+            <div className="shadow-lg rounded-lg p-6 text-center bg-white">
+              <div className="text-yellow-500 text-xl mb-4">
                 {testimonial.stars}
               </div>
-              <p className="text-gray-700 mb-6">"{testimonial.review}"</p>
-              <div className="flex flex-col items-center justify-center">
+              <p className="text-gray-700 mb-6 font-light text-sm md:text-base">
+                "{testimonial.review}"
+              </p>
+              <div className="flex flex-col items-center">
                 <img
                   src={testimonial.picture}
                   alt={testimonial.name}
-                  className="w-16 h-16 rounded-full object-cover mr-4"
+                  className="w-16 h-16 rounded-full object-cover mb-4"
                 />
                 <div>
                   <h4 className="font-bold text-lg">{testimonial.name}</h4>
-                  <p className="text-gray-500">{testimonial.facilityName}</p>
+                  <p className="text-gray-500 text-sm">
+                    {testimonial.facilityName}
+                  </p>
                 </div>
               </div>
             </div>

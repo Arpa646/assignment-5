@@ -24,7 +24,7 @@ const activities = [
 function ServicesOverview() {
   return (
     <div>
-      <div className="space-y-6 mt-20 text-center w-2/4 mx-auto ">
+      <div className="space-y-6 mt-20 text-center lg:w-2/4   w-full    mx-auto ">
         <div>
           <p className="uppercase">Welcome to CozyStay Lodge</p>
         </div>
@@ -36,7 +36,7 @@ function ServicesOverview() {
         </div>
         <div>
           <div>
-            <p className="w-3/4 text-center mx-auto ">
+            <p className="lg:w-3/4 w-full  text-center mx-auto ">
               Welcome to CozyStay Lodge, where luxury meets action. Nestled in
               the heart of adventure, our exceptional hotels and chalets form a
               harmonious and energetic environment for sports enthusiasts. Each
@@ -56,15 +56,15 @@ function ServicesOverview() {
         </button>
 
         {/* First row */}
-        <div className="flex flex-col md:flex-row justify-between items-center w-full max-w-6xl mb-12 relative">
+        <div className="flex flex-col md:flex-row justify-center items-center w-full max-w-6xl mb-12 relative">
           {/* Image 1 */}
           <div className="w-full md:w-1/2 p-4">
             <img
               src={activities[0].image}
               alt={activities[0].caption}
-              className="shadow-md"
+              className="mx-auto shadow-md"
             />
-            <p className="text-sm mt-2">{activities[0].caption}</p>
+            <p className="text-sm mt-2 text-center">{activities[0].caption}</p>
           </div>
 
           {/* Vertical Divider */}
@@ -80,22 +80,22 @@ function ServicesOverview() {
             <img
               src={activities[1].image}
               alt={activities[1].caption}
-              className="mt-6 md:mt-72 ms-10 shadow-md"
+              className="mt-20 md:mt-72 mx-auto shadow-md"
             />
-            <p className="text-sm mt-2 ms-9">{activities[1].caption}</p>
+            <p className="text-sm mt-2 text-center">{activities[1].caption}</p>
           </div>
         </div>
 
         {/* Second row */}
-        <div className="flex flex-col md:flex-row justify-between items-center w-full max-w-6xl relative">
+        <div className="flex flex-col md:flex-row justify-center items-center w-full max-w-6xl relative">
           {/* Image 3 */}
           <div className="w-full md:w-1/2 p-4">
             <img
               src={activities[2].image}
               alt={activities[2].caption}
-              className="mt-6 md:mt-0 ms-16 shadow-md"
+              className="mt-6 md:mt-0 mx-auto shadow-md"
             />
-            <p className="text-sm mt-2">{activities[2].caption}</p>
+            <p className="text-sm mt-2 text-center">{activities[2].caption}</p>
           </div>
 
           {/* Vertical Divider */}
@@ -106,9 +106,9 @@ function ServicesOverview() {
             <img
               src={activities[3].image}
               alt={activities[3].caption}
-              className="mt-6 md:mt-0 ms-14 shadow-md"
+              className="mt-6 md:mt-0 mx-auto shadow-md"
             />
-            <p className="text-sm mt-2">{activities[3].caption}</p>
+            <p className="text-sm mt-2 text-center">{activities[3].caption}</p>
           </div>
         </div>
 

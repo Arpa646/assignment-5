@@ -1,11 +1,5 @@
 
-import {
- 
-  FaTwitter,
-  FaYoutube,
-  FaInstagram,
- 
-} from "react-icons/fa";
+
 const AboutUsSection = () => {
   return (
     <div>

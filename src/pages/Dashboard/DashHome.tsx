@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux";
-import { verifyToken } from "@/utils/verify";
+// import { verifyToken } from "@/utils/verify";
 import { FaUsers } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 
 import { RootState } from "@/redux/store";
-
+import { JwtPayload } from "jsonwebtoken";
+import { jwtDecode } from "jwt-decode";
 import "react-datepicker/dist/react-datepicker.css"; // Import DatePicker styles
 import { useState } from "react";
 import { FaBuilding, FaUserCog, FaClipboardList } from "react-icons/fa";
@@ -16,44 +17,64 @@ import {
 } from "@/redux/api/api"; // Import the queries
 
 export default function AdminDashboard() {
+  interface CustomJwtPayload extends JwtPayload {
+    role?: string; // Optional role field
+    userId?: string; // Optional userId field
+    useremail?: string; // Optional useremail field
+  }
+
   const token = useSelector((state: RootState) => state.auth.token);
-  const user = verifyToken(token);
-  const role = user?.role || "Guest";
-  const id = user?.email; // Ensure this matches the payload structure in verifyToken
+
+  const user = token ? jwtDecode<CustomJwtPayload>(token) : null;
+
+  console.log(user);
+  const role: string = user?.role || "Guest"; // Access the role from the custom payload
+  const id: string = user?.useremail as string; // Ensure this matches the payload structure in verifyToken
   console.log(id);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   // Fetch all bookings and user-specific bookings
+  const { data:allBookings, isLoading: allBookingsLoading } = useGetAllBookingsQuery(undefined);
+
+
+
+
+
+
+  // const allBookings = data ?.data;
+
+  // const allBookings = data?.data;
   const {
-    data: allBookings,
-    isLoading: allBookingsLoading,
-  } = useGetAllBookingsQuery();
-  
-  const {
-    data: userBookings,
-  
+    data: userBooking,
+
     isLoading: userBookingsLoading,
   } = useGetFacilityPerUserQuery(id); // Pass the id (user email) as the argument
 
-  const { data: userProfile } = useGetUserQuery(id);
+  const userBookings = userBooking?.data;
+  const { data: userProfiles } = useGetUserQuery(id as string);
+
+  const userProfile = (userProfiles  )?.data;
+
   console.log(userProfile);
 
   // Extract booked dates based on role
   const bookedDates: Date[] =
     role === "admin"
-      ? allBookings?.data.map((booking: any) => new Date(booking.date)) || []
-      : userBookings?.data.map((booking: any) => new Date(booking.date)) || [];
+      ? allBookings?.map((booking: any) => new Date(booking.date)) || []
+      : userBookings?.map((booking: any) => new Date(booking.date)) || [];
 
   // Function to add the class to booked dates
-  const dayClassName = (date: Date): string | undefined => {
-    const isBooked = bookedDates.some(
-      (bookedDate) =>
-        date.getFullYear() === bookedDate.getFullYear() &&
-        date.getMonth() === bookedDate.getMonth() &&
-        date.getDate() === bookedDate.getDate()
-    );
-    return isBooked ? "highlighted-date" : undefined;
-  };
+// Function to add the class to booked dates
+const dayClassName = (date: Date): string => {
+  const isBooked = bookedDates.some(
+    (bookedDate) =>
+      date.getFullYear() === bookedDate.getFullYear() &&
+      date.getMonth() === bookedDate.getMonth() &&
+      date.getDate() === bookedDate.getDate()
+  );
+  return isBooked ? "highlighted-date" : ""; // Ensure it always returns a string
+};
+
 
   return (
     <>
@@ -69,7 +90,11 @@ export default function AdminDashboard() {
           <span className="font-semibold text-2xl">
             Logged in as:{" "}
             <span className="text-green-600">
-              {role === "admin" ? "🛠️ Admin" : role === "user" ? "👤 User" : "Guest"}
+              {role === "admin"
+                ? "🛠️ Admin"
+                : role === "user"
+                ? "👤 User"
+                : "Guest"}
             </span>
           </span>
         </div>
@@ -94,7 +119,10 @@ export default function AdminDashboard() {
 
               {/* See All Bookings */}
               <div className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300">
-                <FaClipboardList size={40} className="text-yellow-500 mx-auto" />
+                <FaClipboardList
+                  size={40}
+                  className="text-yellow-500 mx-auto"
+                />
                 <h3 className="text-xl font-semibold mt-4 text-center">
                   See All Bookings
                 </h3>
@@ -116,7 +144,10 @@ export default function AdminDashboard() {
 
               {/* Add Admin */}
               <div className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300">
-                <MdAddCircleOutline size={40} className="text-red-500 mx-auto" />
+                <MdAddCircleOutline
+                  size={40}
+                  className="text-red-500 mx-auto"
+                />
                 <h3 className="text-xl font-semibold mt-4 text-center">
                   Add Admin
                 </h3>
@@ -130,7 +161,10 @@ export default function AdminDashboard() {
             <div className="grid grid-cols-1 gap-4">
               {/* See All Own Bookings */}
               <div className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300">
-                <FaClipboardList size={40} className="text-yellow-500 mx-auto" />
+                <FaClipboardList
+                  size={40}
+                  className="text-yellow-500 mx-auto"
+                />
                 <h3 className="text-xl font-semibold mt-4 text-center">
                   See All Own Bookings
                 </h3>

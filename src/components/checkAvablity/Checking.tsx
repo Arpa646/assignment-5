@@ -1,5 +1,5 @@
 
-import { useCheckAvailabilityQuery } from "@/redux/api/api"; // Import the query hook
+// import { useCheckAvailabilityQuery } from "@/redux/api/api"; // Import the query hook
 
 function Checking() {
   // const [date, setDate] = useState<string>(""); // State to store selected date

@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Table,
   TableHeader,
@@ -19,12 +18,24 @@ const statusColorMap: { [key: string]: "success" | "warning" | "danger" } = {
 
 export default function ViewAllBooking() {
   // Fetch booking data from the API
-  const { data: bookingData, isLoading, error } = useGetAllBookingsQuery({});
+  const { data:bookingData, isLoading, error } = useGetAllBookingsQuery(undefined);
 
+  // const  = data?.data;
+  console.log(bookingData);
   // Handle loading and error states
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading bookings.</p>;
+//    interface Booking {
+//     facility: Types.ObjectId;
+//     date: Date;
+//     startTime: string;
+//     endTime: string;
+//     user: Types.ObjectId; // Correctly use Types.ObjectId
+//     isBooked?: string;
+//     payableAmount?: number;
 
+
+// }
   // Render the table with booking data
   return (
     <Table aria-label="Bookings table">
@@ -42,7 +53,7 @@ export default function ViewAllBooking() {
         <TableColumn>Status</TableColumn>
       </TableHeader>
       <TableBody>
-        {bookingData?.data?.map((item) => (
+        {bookingData?.map((item :any)  => (
           <TableRow key={item._id}>
             <TableCell>{item.facility.name}</TableCell>
             <TableCell>{item.facility.location}</TableCell>

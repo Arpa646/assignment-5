@@ -23,15 +23,19 @@ const FacilityList = () => {
   const [sortOption, setSortOption] = useState("");
   const [priceRange, setPriceRange] = useState<number[]>([0, 1000]);
   const postsPerPage = 6;
-  const { data: facilitiesData, isLoading } = useGetFacilitiesQuery({}); // Update to use facilities data query
+  const { data, isLoading } = useGetFacilitiesQuery(undefined); // Update to use facilities data query
+  const facilitiesData=data?.data 
 
-  console.log(facilitiesData);
+console.log(facilitiesData)
+
+
+
 
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredFacilities =
     facilitiesData &&
-    facilitiesData.data.filter((facility: TFacility) => {
+    facilitiesData.filter((facility: TFacility) => {
       const inCategory =
         selectedCategory === "All" || facility.category === selectedCategory;
       const inPriceRange =

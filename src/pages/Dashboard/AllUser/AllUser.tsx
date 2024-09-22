@@ -2,10 +2,27 @@ import React from "react";
 import { useGetUserQuery } from "@/redux/api/api";
 
 const AllUser: React.FC = () => {
-  const { data: users, error, isLoading } = useGetUserQuery({});
-  console.log(users?.data);
+  const { data, error, isLoading } = useGetUserQuery(undefined);
+
+  console.log(data);
+
+  const users = (data as any)?.data;
+
+  console.log(users);
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error fetching users</p>;
+
+  interface User {
+    _id:string;
+    address: string;
+    createdAt:string;
+    updatedAt:string;
+    email: string;
+    name: string;
+    password: string;
+    phone: string;
+    role: string;
+  }
 
   return (
     <div className="overflow-x-auto">
@@ -37,7 +54,7 @@ const AllUser: React.FC = () => {
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {users &&
-            users.data?.map((user) => (
+            users?.map((user: User) => (
               <tr key={user._id}>
                 <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>

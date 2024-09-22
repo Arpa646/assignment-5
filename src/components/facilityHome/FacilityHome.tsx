@@ -6,7 +6,12 @@ export default function FacilityHome() {
     data: facilitiesDataresult,
     isLoading,
     error,
-  } = useGetFacilitiesQuery({}); // Fetching facility data
+  } = useGetFacilitiesQuery(undefined); // Fetching facility data
+
+
+
+
+
   const facilitiesData = facilitiesDataresult?.data;
   console.log(facilitiesData);
   if (isLoading) {
@@ -21,6 +26,7 @@ export default function FacilityHome() {
 
   // Update Facility type to match the expected data structure
   type Facility = {
+  
     _id: string; // Use _id instead of id if that's what your data uses
     name: string;
     description: string;

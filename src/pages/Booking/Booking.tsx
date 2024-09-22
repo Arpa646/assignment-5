@@ -3,7 +3,7 @@ import {
   useCheckAvailabilityQuery,
   useAddBookingMutation,
 } from "@/redux/api/api"; // Import mutation hook
-import { useNavigate } from "react-router-dom"; // For navigation to booking confirmation
+//import { useNavigate } from "react-router-dom"; // For navigation to booking confirmation
 
 const Booking = () => {
   const [date, setDate] = useState<string>(""); // State to store selected date
@@ -12,17 +12,28 @@ const Booking = () => {
     endTime: string;
   } | null>(null); // State for selected slot
   const facilityId = "668947f90da1ea65db195306"; // Facility ID (replace with dynamic value if needed)
-  const navigate = useNavigate(); // To navigate to booking confirmation page
+  // const navigate = useNavigate(); // To navigate to booking confirmation page
 
   // Use the query hook with the date parameter and skip fetching if date is not provided
   const { data, error, isLoading } = useCheckAvailabilityQuery(date, {
     skip: !date, // Skip fetching if date is empty
   });
-  console.log("abledate", data);
+
+  // interface AvailabilityResponse {
+  //   data: any; // Replace `any` with the actual type if known
+  // }
+
+  // // Assume `useCheckAvailabilityQuery` is the query hook
+  // const { data } = useCheckAvailabilityQuery(date);
+
+  const availableslot = data?.data;
+
+  // const availableslot=data?.data
+
   // Mutation hook to add booking
   const [
     addBooking,
-    { isLoading: bookingLoading, error: bookingError, data: bookingResponse },
+    { isLoading: bookingLoading, error: bookingError,},
   ] = useAddBookingMutation();
 
   // Handle date change
@@ -41,10 +52,20 @@ const Booking = () => {
     );
   };
 
+  // Create an interface for the booking data
+  interface BookingData {
+    booking: {
+      facility: string; // Assuming facilityId is a string
+      date: string; // Assuming date is a string (could also be Date if using Date objects)
+      startTime: string; // Assuming time is a string
+      endTime: string; // Assuming time is a string
+    };
+  }
+
   // Confirm booking using mutation
   const handleConfirmBooking = async () => {
     if (selectedSlot) {
-      const bookingData = {
+      const bookingData: BookingData = {
         booking: {
           facility: facilityId, // Set the facility ID
           date: date, // Selected date
@@ -59,6 +80,9 @@ const Booking = () => {
         const response = await addBooking(bookingData).unwrap(); // Unwrap the result to handle the response
         console.log("Booking Success:", response);
 
+       console.log("booik", response);
+         window.location.href = response.data.payment_url;
+
         // Navigate to the booking confirmation page
         // navigate(`/confirm-booking`, { state: bookingData });
       } catch (err) {
@@ -69,25 +93,25 @@ const Booking = () => {
     }
   };
 
-  const [formData, setFormData] = useState({
-    date: "",
-    startTime: "",
-    endTime: "",
-  });
+  // const [formData] = useState({
+  //   date: "",
+  //   startTime: "",
+  //   endTime: "",
+  // });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   setFormData({
+  //     ...formData,
+  //     [name]: value,
+  //   });
+  // };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    // Add your form submission logic here, such as sending the form data to the server
-  };
+  // const handleSubmit = (e :React.ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   console.log(formData);
+  //   // Add your form submission logic here, such as sending the form data to the server
+  // };
   return (
     <div>
       <div
@@ -116,14 +140,14 @@ const Booking = () => {
 
         {isLoading && <p>Loading...</p>}
         {error && <p>Error checking availability</p>}
-        {data && data.data && data.data.length > 0 && (
+        {data && availableslot && availableslot.length > 0 && (
           <div>
             <h2 className="text-xl  mb-2">
               Available Slots <br />
               You can direct book for this date by selecting any slot
             </h2>
             <div className="grid grid-cols-2 gap-4">
-              {data.data.map(
+              {availableslot?.map(
                 (
                   slot: { startTime: string; endTime: string },
                   index: number
@@ -165,18 +189,13 @@ const Booking = () => {
           </div>
         )}
       </div>
-
     </div>
   );
 };
 
 export default Booking;
 
-
-
-
-
-// {/* 
+// {/*
 //       <form
 //         onSubmit={handleSubmit}
 //         className="bg-[#494e40f8] mt-7 text-white max-w-md mx-auto p-6 shadow-lg rounded-md"
@@ -235,21 +254,6 @@ export default Booking;
 //           Check Availability
 //         </button>
 //       </form> */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useState } from "react";
 // import {

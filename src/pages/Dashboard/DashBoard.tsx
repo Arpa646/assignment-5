@@ -8,15 +8,15 @@ import { RootState } from "@/redux/store";
 const DashBoard = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-   interface JwtPayload {
-  role: string;
-  // Add other properties if needed
-}
+//    interface JwtPayload {
+//   role: string;
+//   // Add other properties if needed
+// }
 
 
   const token = useSelector((state: RootState) => state.auth.token);
-  const user = verifyToken(token);
-  const role = user.role
+  const user = verifyToken(token as string)  ;
+  const role = (user as any).role;
 
   // Toggle sidebar
   const toggleSidebar = () => {
@@ -65,6 +65,17 @@ const DashBoard = () => {
           >
             📊 DashBoard Home
           </NavLink>
+
+
+          <NavLink
+                style={{ borderBottom: "1px solid #655846" }}
+                to="/dashboard/viewallbooking"
+                className="block py-2.5 px-4  transition duration-200 hover:bg-gray-700"
+              >
+                📅 See All Bookings
+              </NavLink>
+
+
 
           {/* Admin Menu */}
           {role === "admin" && (

@@ -5,7 +5,7 @@ import {
   useAddFacilityMutation,
   useUpdateFacilityMutation,
 } from "@/redux/api/api";
-import { useSelector } from "react-redux";
+
 
 import Swal from "sweetalert2";
 import {
@@ -34,8 +34,8 @@ export type Facility = {
 const FacilityManagement = () => {
   // const token = useSelector((state: RootState) => state.auth.token);
   
-  const { data: facilitiesData } = useGetFacilitiesQuery({});
-
+  const { data } = useGetFacilitiesQuery(undefined);
+const facilitiesData=data?.data
   const [deleteFacility] = useDeleteFacilityMutation();
   const [updateFacility] = useUpdateFacilityMutation();
   const [addFacility, { data: addFacilityResult }] = useAddFacilityMutation();
@@ -71,7 +71,7 @@ const FacilityManagement = () => {
     } else {
       setNewFacilityData((prevData) => ({
         ...prevData,
-        [field]: value,index
+        [field]: value
       }));
     }
   };
@@ -263,7 +263,7 @@ const FacilityManagement = () => {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {facilitiesData &&
-              facilitiesData.data?.map((facility: Facility) => (
+              facilitiesData?.map((facility: Facility) => (
                 <tr key={facility._id}>
                   <td className="px-6 py-4 whitespace-nowrap">
                    <img src= {facility.image} alt=""  />

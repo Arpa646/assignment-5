@@ -1,11 +1,26 @@
 // src/api/baseApi.ts
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+// Define types for API responses and requests
+interface Plant {
+  id: string;
+  name: string;
+  // other plant properties
+}
+
+
+
+
+interface RootState {
+  auth: {
+    token: string;
+  };
+}
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api",
+    baseUrl: "https://assignment-ivory-two.vercel.app/api",
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
@@ -19,7 +34,7 @@ export const baseApi = createApi({
   }),
   tagTypes: ["plants", "facilities"],
   endpoints: (builder) => ({
-    getPlants: builder.query({
+    getPlants: builder.query<Plant[], void>({
       query: () => ({
         url: "/plants",
         method: "GET",
@@ -71,7 +86,7 @@ export const baseApi = createApi({
         url: "/bookings/user",
         method: "GET",
       }),
-      providesTags: ["plants"],
+     
     }),
     signUp: builder.mutation({
       query: (user) => ({
@@ -81,7 +96,7 @@ export const baseApi = createApi({
       }),
       invalidatesTags: ["plants"],
     }),
-    logIn: builder.mutation({
+    logIn: builder.mutation<void, { email: string; password: string }>({
       query: (user) => ({
         url: "/auth/login",
         method: "POST",
@@ -89,34 +104,18 @@ export const baseApi = createApi({
       }),
       invalidatesTags: ["plants"],
     }),
-
-    // checkAvailability: builder.query({
-
-    //   query: (date) => ({
-    //     url: "/check-availability?date=${date}",
-    //     method: "GET",
-    //   }),
-    //   // query: (date) => `/check-availability?date=${date}`,
-    // }),
-
     checkAvailability: builder.query({
-      query: (date) => {
-        // Log the date to console
-        console.log("Date passed to checkAvailability:", date);
-
-        return {
-          url: `/check-availability?date=${date}`, // Use backticks for template literal
-          method: "GET",
-        };
-      },
+      query: (date) => ({
+        url: `/check-availability?date=${date}`,
+        method: "GET",
+      }),
     }),
-
-    cancelBooking: builder.mutation({
+    cancelBooking: builder.mutation<void, string>({
       query: (id) => ({
         url: `/bookings/${id}`,
         method: "DELETE",
       }),
-      providesTags: ["plants"],
+    
     }),
     getSingleFacility: builder.query({
       query: (id) => ({
@@ -125,7 +124,7 @@ export const baseApi = createApi({
       }),
       providesTags: ["facilities"],
     }),
-    addBooking: builder.mutation<void, Booking>({
+    addBooking: builder.mutation({
       query: (bookingData) => ({
         url: "bookings",
         method: "POST",
@@ -142,17 +141,16 @@ export const {
   useGetFacilitiesQuery,
   useAddFacilityMutation,
   useAddBookingMutation,
-
   useUpdateFacilityMutation,
   useDeleteFacilityMutation,
   useGetFacilityPerUserQuery,
-
   useGetUserQuery,
-
   useLogInMutation,
   useSignUpMutation,
 
   useCheckAvailabilityQuery,
+} = baseApi;
+
   //useGetFacilitiesQuery,
   //   useGetSingleFacilityQuery,
   //   useAddFacilityMutatio
@@ -168,7 +166,7 @@ export const {
   //   useSignUpMutation,
   //   useDeleteFacilityMutation,
   //   useCheckAvailabilityQuery,
-} = baseApi;
+//} = baseApi;
 
 // import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 

@@ -14,26 +14,30 @@ import {
 } from "@nextui-org/react";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 
-// export type Booking = {
-//   _id: string;
-//   facility: {
-//     _id: string;
-//     name: string;
-//     description: string;
-//     pricePerHour: number;
-//     location: string;
-//     isDeleted: boolean;
-//   };
-//   date: string;
-//   startTime: string;
-//   endTime: string;
-//   user: string;
-//   payableAmount: number;
-//   isBooked: string;
-// };
+export type Booking = {
+  _id: string;
+  facility: {
+    _id: string;
+    name: string;
+    description: string;
+    pricePerHour: number;
+    location: string;
+    isDeleted: boolean;
+  };
+  date: string;
+  startTime: string;
+  endTime: string;
+  user: string;
+  payableAmount: number;
+  isBooked: string;
+};
 
 const BookingTable = () => {
-  const { data: bookingsData } = useGetFacilityPerUserQuery({});
+  const { data } = useGetFacilityPerUserQuery(undefined);
+const bookingsData=data?.data
+
+console.log('gg',bookingsData)
+
   const [cancelBooking] = useCancelBookingMutation();
   console.log("test", bookingsData && bookingsData);
   const handleCancel = (id: string) => {
@@ -80,7 +84,7 @@ const BookingTable = () => {
           </thead>
           <tbody className=" border  text-center border-blue-300">
             {bookingsData &&
-              bookingsData.data.map((booking) => (
+              bookingsData?.map((booking : Booking) => (
                 <tr key={booking._id}>
                   <td>{booking.facility?.name}</td>
 

@@ -1,5 +1,3 @@
-
-
 const activities = [
   {
     image:
@@ -58,56 +56,57 @@ function ServicesOverview() {
         </button>
 
         {/* First row */}
-        <div className="flex justify-between items-center w-full max-w-6xl mb-12 relative">
+        <div className="flex flex-col md:flex-row justify-between items-center w-full max-w-6xl mb-12 relative">
           {/* Image 1 */}
-          <div className="w-1/2 p-4">
+          <div className="w-full md:w-1/2 p-4">
             <img
               src={activities[0].image}
               alt={activities[0].caption}
-              className="   shadow-md"
+              className="shadow-md"
             />
             <p className="text-sm mt-2">{activities[0].caption}</p>
           </div>
 
           {/* Vertical Divider */}
-          <div className="h-[600px] mt-[-300px] w-px bg-gray-300 absolute left-1/2 transform -translate-x-1/2"></div>
+          <div className="hidden md:block h-[600px] mt-[-300px] w-px bg-gray-300 absolute left-1/2 transform -translate-x-1/2"></div>
 
           {/* Headline */}
-          <h2 className="text-2xl w-96 mt-96  text-center font-serif ">
+          <h2 className="text-2xl absolute md:static w-full md:w-auto mt-4 md:mt-96 text-center font-serif">
             Wonderful Countryside <br /> Activities & Great <br /> Experiences
           </h2>
+
           {/* Image 2 */}
-          <div className="w-1/2 p-4">
+          <div className="w-full md:w-1/2 p-4">
             <img
               src={activities[1].image}
               alt={activities[1].caption}
-              className="mt-72 ms-10 shadow-md"
+              className="mt-6 md:mt-72 ms-10 shadow-md"
             />
             <p className="text-sm mt-2 ms-9">{activities[1].caption}</p>
           </div>
         </div>
 
         {/* Second row */}
-        <div className="flex justify-between items-center w-full max-w-6xl relative">
+        <div className="flex flex-col md:flex-row justify-between items-center w-full max-w-6xl relative">
           {/* Image 3 */}
-          <div className="w-1/2 p-4">
+          <div className="w-full md:w-1/2 p-4">
             <img
               src={activities[2].image}
               alt={activities[2].caption}
-              className="  ms-16 -mt-32  shadow-md"
+              className="mt-6 md:mt-0 ms-16 shadow-md"
             />
             <p className="text-sm mt-2">{activities[2].caption}</p>
           </div>
 
           {/* Vertical Divider */}
-          <div className="h-[850px] -mt-64 w-px bg-gray-300 absolute left-1/2 transform -translate-x-1/2"></div>
+          <div className="hidden md:block h-[850px] -mt-64 w-px bg-gray-300 absolute left-1/2 transform -translate-x-1/2"></div>
 
           {/* Image 4 */}
-          <div className="w-1/2 p-4">
+          <div className="w-full md:w-1/2 p-4">
             <img
               src={activities[3].image}
               alt={activities[3].caption}
-              className=" ms-14   shadow-md"
+              className="mt-6 md:mt-0 ms-14 shadow-md"
             />
             <p className="text-sm mt-2">{activities[3].caption}</p>
           </div>

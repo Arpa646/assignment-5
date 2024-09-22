@@ -57,13 +57,13 @@ const Login: React.FC = () => {
 
       const apiError = error as ApiError;
 
-      if (apiError.status === 401 || apiError.status === 400) {
+      if (apiError.status === 500 || apiError.status === 400) {
         setErrorMessage("Wrong email or password.");
       } else {
         setErrorMessage("An unexpected error occurred. Please try again.");
       }
 
-      toast.error("Login failed. Please try again.");
+      // toast.error("Login failed. Please try again.");
     }
   };
 

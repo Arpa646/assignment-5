@@ -55,7 +55,7 @@ const HeroTextContent = () => (
         rounded-none py-2 md:py-3 lg:py-4 px-6 md:px-8 transition-all duration-300 hover:bg-white hover:text-[#A18549] 
         hover:border-[#A18549]"
       >
-        Book Now
+ <NavLink to="/facilities">Book Now</NavLink>
       </Button>
     </NavLink>
   </div>

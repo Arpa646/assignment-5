@@ -1,18 +1,20 @@
 export default function Image() {
   return (
-    <div className="  p-10">
-      <h1 className="text-black text-3xl p-6 text-center">
-        Our Gallery
-      </h1>
-      <div className="grid container grid-cols-5 gap-2 mx-auto  ">
-        <div className="col-span-3 h-full">
+    <div className="p-10">
+      <h1 className="text-black text-3xl p-6 text-center">Our Gallery</h1>
+
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-5 md:gap-2 container mx-auto">
+        {/* Main image for larger screens */}
+        <div className="md:col-span-3 h-full">
           <img
             src="https://media.istockphoto.com/id/1517473680/photo/paddle-tennis-player-making-an-effort-to-while-hitting-the-ball-during-a-match-on-outdoor.jpg?s=612x612&w=0&k=20&c=XAqco8aQOZziqzo_-icoEFOlSPMCEZJ7JVlWYr7mTmE="
             alt="Main"
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="col-span-2 grid grid-cols-2 gap-4 h-full">
+
+        {/* Smaller images */}
+        <div className="md:col-span-2 grid grid-cols-2 gap-4 md:grid-cols-2 md:gap-4 h-full">
           <img
             src="https://media.istockphoto.com/id/1487770785/photo/smiling-senior-woman-and-others-taking-an-exercise-class-at-the-gym.jpg?s=612x612&w=0&k=20&c=vgBSRm_p6LOF04dsljizJJR1gTwrohbAbDGK5i-Q9Fs="
             alt="Right 1"

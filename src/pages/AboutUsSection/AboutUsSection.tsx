@@ -1,30 +1,31 @@
-
-
 const AboutUsSection = () => {
   return (
     <div>
       <div style={{ backgroundColor: "rgb(21,23,25)" }} className="bg-black  ">
         <section
           style={{ backgroundColor: "rgb(21,23,25)" }}
-          className="bg-black w-3/4  mx-auto   h-screen text-white flex flex-col md:flex-row p-8 md:p-16"
+         className="bg-black w-4/4 sm:3/4  lg:3/4   mx-auto h-auto text-white flex flex-col md:flex-row p-8 md:p-16"
+
         >
           {/* Left Side - Text */}
-          <div className="md:w-2/4  md:ml-16 mt-8 md:mt-0 relative">
+          <div className="md:w-2/4 sm:w-full  md:ml-16 lg:mt-8 md:mt-0 relative">
             {/* Top Image */}
             <img
-              className=" relative z-0"
+              className="md:relative lg:relative z-0 w-full"
               src="https://cozystay.loftocean.com/apartment/wp-content/uploads/sites/6/2023/03/img-33-550x733.jpg"
               alt="Sports Event"
             />
 
             {/* Bottom Image */}
             <img
-              className=" absolute w-3/4 top-32 left-48 z-10"
+              className="w-full mt-3 md:w-3/4 lg:absolute  md:absolute lg:top-32 lg:left-48 lg:z-10"
               src="https://cozystay.loftocean.com/apartment/wp-content/uploads/sites/6/2023/04/img-34-2-370x555.jpg"
               alt="Team Training"
             />
           </div>
-          <div className="md:w-3/4 ms-44  ">
+
+          {/* Right Side - Text */}
+          <div className="md:w-4/4   lg:ms-44  sm:w-full ">
             <h2 className="text-gray-400 uppercase text-sm mb-2">
               The Spirit of Champions
             </h2>
@@ -46,12 +47,11 @@ const AboutUsSection = () => {
             </p>
             <p className="mt-6 font-semibold text-xl">The Spirit Lives On...</p>
           </div>
-
-          {/* Right Side - Images */}
         </section>
+
         <section
           style={{ backgroundColor: "rgb(21,23,25)" }}
-          className="bg-black w-3/4  mx-auto   h-screen text-white flex flex-col md:flex-row p-8 md:p-16"
+          className="bg-black w-3/4  mx-auto   h-auto text-white flex flex-col md:flex-row p-8 md:p-16"
         >
           {/* Left Side - Text */}
           <div className="md:w-1/2">
@@ -81,14 +81,14 @@ const AboutUsSection = () => {
           <div className="md:w-1/2 md:ml-16 mt-8 md:mt-0 relative">
             {/* Top Image */}
             <img
-              className=" relative z-10"
+              className="   md:relative lg:relative z-10"
               src="https://cozystay.loftocean.com/apartment/wp-content/uploads/sites/6/2023/04/mk-s-KiH1EizXh58-unsplash-370x557.jpg"
               alt="Sports Event"
             />
 
             {/* Bottom Image */}
             <img
-              className=" absolute top-12 left-40 z-0"
+              className=" md:absolute mt-4 lg:mt-0    lg:absolute top-10 left-40 z-0"
               src="https://cozystay.loftocean.com/apartment/wp-content/uploads/sites/6/2023/04/kam-idris-hYb7kbu4x7E-unsplash-550x600.jpg"
               alt="Team Training"
             />
@@ -195,51 +195,6 @@ const AboutUsSection = () => {
             </div>
           </div>
         </div>
-        {/* Bottom Footer with Icons
-        <div className="border-t border-gray-600 mt-8 pt-4 flex flex-col md:flex-row justify-between items-center">
-          <div className="text-gray-400 text-xs mb-4 md:mb-0">
-            © Copyright CozyStay WordPress Theme for Hotel Booking.
-          </div>
-          <div className="flex space-x-4 items-center">
-            <img
-              src="https://www.svgrepo.com/show/303238/paypal-logo.svg"
-              alt="PayPal"
-              className="w-10"
-            />
-            <img
-              src="https://www.svgrepo.com/show/304298/visa.svg"
-              alt="Visa"
-              className="w-10"
-            />
-            <img
-              src="https://www.svgrepo.com/show/157845/mastercard.svg"
-              alt="MasterCard"
-              className="w-10"
-            />
-            <img
-              src="https://www.svgrepo.com/show/354019/stripe.svg"
-              alt="Stripe"
-              className="w-10"
-            />
-          </div>
-          <div className="flex space-x-4 text-gray-400 mt-4 md:mt-0">
-            <a href="#" aria-label="Facebook">
-              <FaFacebookF />
-            </a>
-            <a href="#" aria-label="Twitter">
-              <FaTwitter />
-            </a>
-            <a href="#" aria-label="Pinterest">
-              <FaPinterest />
-            </a>
-            <a href="#" aria-label="YouTube">
-              <FaYoutube />
-            </a>
-            <a href="#" aria-label="Instagram">
-              <FaInstagram />
-            </a>
-          </div>
-        </div> */}
       </footer>
     </div>
   );

@@ -1,17 +1,10 @@
-
-
 import {
   useGetFacilityPerUserQuery,
   useCancelBookingMutation,
-} from "@/redux/api/api"; // Update this with your booking-related API hooks
+} from "@/redux/api/api";
 import Swal from "sweetalert2";
 
-import {
-  Button,
-
-  
-
-} from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 
 export type Booking = {
@@ -34,12 +27,10 @@ export type Booking = {
 
 const BookingTable = () => {
   const { data } = useGetFacilityPerUserQuery(undefined);
-const bookingsData=data?.data
-
-console.log('gg',bookingsData)
-
+  const bookingsData = data?.data;
+console.log(bookingsData)
   const [cancelBooking] = useCancelBookingMutation();
-  console.log("test", bookingsData && bookingsData);
+
   const handleCancel = (id: string) => {
     Swal.fire({
       title: "Are you sure?",
@@ -69,34 +60,39 @@ console.log('gg',bookingsData)
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-4 sm:px-8 py-4">
       <h2 className="text-2xl font-bold mb-4">Booking List</h2>
       <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-        <table className="w-full">
-          <thead className=" border border-blue-300">
+        <table className="w-full min-w-[600px] table-auto border border-blue-300">
+          <thead className="bg-gray-100 border-b border-blue-300">
             <tr>
-              <th scope="col">Facility</th>
-
-              <th scope="col">Payable Price</th>
-              <th scope="col">Booking Status</th>
-              <th scope="col">Actions</th>
+              <th scope="col" className="px-4 py-2 text-left">Image</th>
+              <th scope="col" className="px-4 py-2 text-left">Facility</th>
+              <th scope="col" className="px-4 py-2 text-left">Payable Price</th>
+              <th scope="col" className="px-4 py-2 text-left">Booking Status</th>
+              <th scope="col" className="px-4 py-2 text-left">Actions</th>
             </tr>
           </thead>
-          <tbody className=" border  text-center border-blue-300">
+          <tbody className="text-center border-t border-blue-300">
             {bookingsData &&
-              bookingsData?.map((booking : Booking) => (
-                <tr key={booking._id}>
-                  <td>{booking.facility?.name}</td>
+              bookingsData.map((booking: Booking) => (
+                <tr key={booking._id} className="bg-white even:bg-gray-100">
+                  <td className="px-4 py-2 text-left"><img className="w-20" src={booking.facility.image} alt="" srcset="" /></td>
+                  <td className="px-4 py-2 text-left">{booking.facility.name}</td>
 
-                  <td>${booking.payableAmount.toFixed(2)}</td>
-                  <td>{booking.isBooked}</td>
-                  <td className="flex">
-                    <Button
-                      className="font-normal text-black border border-black bg-transparent rounded-none px-2 py-1"
-                      onPress={() => handleCancel(booking._id)}
-                    >
-                      <MdOutlineDeleteOutline />
-                    </Button>
+
+
+                  <td className="px-4 py-2 text-left">${booking.payableAmount.toFixed(2)}</td>
+                  <td className="px-4 py-2 text-left">{booking.isBooked}</td>
+                  <td className="px-4 py-2 text-left">
+                    <div className="flex justify-center md:justify-start">
+                      <Button
+                        className="font-normal text-black border border-black bg-transparent rounded-none px-2 py-1"
+                        onPress={() => handleCancel(booking._id)}
+                      >
+                        <MdOutlineDeleteOutline />
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))}

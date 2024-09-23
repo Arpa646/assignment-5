@@ -1,10 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
+import { PulseLoader } from "react-spinners"; // Add a loader package like react-spinners
 
 import { useGetSingleFacilityQuery } from "@/redux/api/api";
 import { useParams } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import { RootState } from "@/redux/store"; 
+import { useSelector } from "react-redux";
 export default function FacilityDetails() {
+
+
+  interface CustomJwtPayload {
+    role?: string;
+    userId?: string;
+    useremail?: string;
+  }
+
+  const token = useSelector((state: RootState) => state.auth.token);
+  const user = token ? jwtDecode<CustomJwtPayload>(token) : null;
+  const role: string = user?.role || "Guest";
+
+
+
+
+
+
   const { id } = useParams();
   const { data: facilityData, isLoading } = useGetSingleFacilityQuery(
     id as string
@@ -14,16 +34,13 @@ export default function FacilityDetails() {
 
   console.log(facility);
 
-
-
   if (isLoading) {
     return (
-      <p className="text-3xl text-center text-black my-2 font-bold">
-        Loading....
-      </p>
+      <div className="flex justify-center items-center h-screen bg-black">
+        <PulseLoader color="#A18549" size={15} /> {/* Customizable loader */}
+      </div>
     );
   }
-
   return (
     <div>
       <div className="flex flex-col items-center p-4 text-black min-h-screen">
@@ -94,7 +111,7 @@ export default function FacilityDetails() {
                       Status: {facility?.status}
                     </span>
                   </div>
-                  <NavLink
+                { role=="user" &&  <NavLink
                     to="/booking"
                     state={{ facility }} // Pass the full facility data here
                   >
@@ -105,7 +122,7 @@ export default function FacilityDetails() {
                     >
                       Book Now
                     </button>
-                  </NavLink>
+                  </NavLink>}
                 </div>
               </div>
             </div>

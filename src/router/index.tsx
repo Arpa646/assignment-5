@@ -62,7 +62,7 @@ const router = createBrowserRouter([
       },
       {
         path: "facilities",
-        element: <FacilityList />,
+        element: <ProtectedRoute>  <FacilityList /> </ProtectedRoute>,
       },
       {
         path: "*",

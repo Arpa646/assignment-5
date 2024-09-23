@@ -13,23 +13,27 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { useGetFacilitiesQuery } from "@/redux/api/api"; // Update to facility query
+import { PulseLoader } from "react-spinners"; // Add a loader package like react-spinners
 
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 
 const FacilityList = () => {
+ 
+
+
+
+
+
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOption, setSortOption] = useState("");
   const [priceRange, setPriceRange] = useState<number[]>([0, 1000]);
   const postsPerPage = 6;
   const { data, isLoading } = useGetFacilitiesQuery(undefined); // Update to use facilities data query
-  const facilitiesData=data?.data 
+  const facilitiesData = data?.data;
 
-console.log(facilitiesData)
-
-
-
+  console.log(facilitiesData);
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -66,7 +70,11 @@ console.log(facilitiesData)
     });
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return (
+      <div className="flex justify-center items-center h-screen bg-black">
+        <PulseLoader color="#A18549" size={15} /> {/* Customizable loader */}
+      </div>
+    );
   }
 
   const lastPostIndex = currentPage * postsPerPage;
@@ -115,7 +123,7 @@ console.log(facilitiesData)
         </div>
 
         <div className="md:w-9/12">
-          <div className="flex justify-end mb-6">
+          <div className="flex  justify-end mb-6">
             <div className="header flex items-center justify-between mb-4">
               <input
                 type="text"
@@ -142,20 +150,29 @@ console.log(facilitiesData)
             </Select>
           </div>
 
-          <div className="my-5 p-3">
+          <div className="my-5   p-3">
             <div className="facility-category-section">
-              <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-10 mx-auto my-5">
-                {currentPosts?.map((facility: TFacility) => (
-                  <FacilityCard key={facility._id} facility={facility} />
-                ))}
-              </div>
+              {currentPosts && currentPosts.length > 0 ? (
+                <div className="grid md:grid-cols-1 sm:grid-cols-2 gap-10 mx-auto my-5">
+                  {currentPosts.map((facility: TFacility) => (
+                    <FacilityCard key={facility._id} facility={facility} />
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-10 text-gray-500">
+                  No facilities found for this search.
+                </div>
+              )}
 
-              <Pagination
-                totalPosts={sortedFacilities.length} // Update to use sortedFacilities length for pagination
-                postsPerPage={postsPerPage}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-              />
+              {/* Pagination */}
+              {sortedFacilities.length > 0 && (
+                <Pagination
+                  totalPosts={sortedFacilities.length}
+                  postsPerPage={postsPerPage}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                />
+              )}
             </div>
           </div>
         </div>

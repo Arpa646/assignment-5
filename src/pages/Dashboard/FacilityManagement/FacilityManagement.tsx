@@ -6,7 +6,6 @@ import {
   useUpdateFacilityMutation,
 } from "@/redux/api/api";
 
-
 import Swal from "sweetalert2";
 import {
   Button,
@@ -33,9 +32,9 @@ export type Facility = {
 
 const FacilityManagement = () => {
   // const token = useSelector((state: RootState) => state.auth.token);
-  
+
   const { data } = useGetFacilitiesQuery(undefined);
-const facilitiesData=data?.data
+  const facilitiesData = data?.data;
   const [deleteFacility] = useDeleteFacilityMutation();
   const [updateFacility] = useUpdateFacilityMutation();
   const [addFacility, { data: addFacilityResult }] = useAddFacilityMutation();
@@ -71,7 +70,7 @@ const facilitiesData=data?.data
     } else {
       setNewFacilityData((prevData) => ({
         ...prevData,
-        [field]: value
+        [field]: value,
       }));
     }
   };
@@ -266,7 +265,7 @@ const facilitiesData=data?.data
               facilitiesData?.map((facility: Facility) => (
                 <tr key={facility._id}>
                   <td className="px-6 py-4 whitespace-nowrap">
-                   <img src= {facility.image} alt=""  />
+                    <img src={facility.image} alt="" />
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {facility.name}
@@ -301,14 +300,14 @@ const facilitiesData=data?.data
       </div>
 
       <Modal
-        className="fixed inset-0 flex items-center justify-center z-50"
+        className="fixed inset-0 flex items-center justify-center h-3/4 z-50"
         placement="center"
         isOpen={isOpen}
         onOpenChange={onClose}
       >
         <div className="fixed inset-0 bg-black opacity-60 z-40"></div>
-        <ModalContent className="bg-white rounded-lg p-6 mx-auto z-50 w-full max-w-lg max-h-screen overflow-y-auto">
-          <ModalHeader className="flex justify-between items-center gap-1 text-lg font-bold text-gray-800">
+        <ModalContent className="bg-white rounded-lg p-6 mx-auto z-50 w-full max-w-lg  overflow-y-auto">
+          <ModalHeader className="flex justify-between items-center gap-1 text-lg font-bold ">
             {isEditing ? "Edit Facility" : "Add Facility"}
           </ModalHeader>
           <ModalBody className="w-full space-y-1">
@@ -360,7 +359,7 @@ const facilitiesData=data?.data
             />
           </ModalBody>
 
-          <ModalFooter className="w-full flex flex-col md:flex-row justify-end gap-1 pt-2">
+          <ModalFooter className="w-full mb-6 flex flex-col md:flex-row justify-end gap-1   mt-9  ">
             <Button
               className="bg-subThemeColor border border-black text-black px-4 py-2 shadow-md"
               onPress={isEditing ? handleUpdateFacility : handleAddFacility}

@@ -1,170 +1,132 @@
 import { useSelector } from "react-redux";
-// import { verifyToken } from "@/utils/verify";
-import { FaUsers } from "react-icons/fa";
-import DatePicker from "react-datepicker";
-
-import { RootState } from "@/redux/store";
-import { JwtPayload } from "jsonwebtoken";
-import { jwtDecode } from "jwt-decode";
-import "react-datepicker/dist/react-datepicker.css"; // Import DatePicker styles
-import { useState } from "react";
-import { FaBuilding, FaUserCog, FaClipboardList } from "react-icons/fa";
+import {
+  FaUsers,
+  FaBuilding,
+  FaUserCog,
+  FaClipboardList,
+} from "react-icons/fa";
+import { RootState } from "@/redux/store"; 
 import { MdAddCircleOutline } from "react-icons/md";
+import DatePicker from "react-datepicker";
+import { useState } from "react";
+import { jwtDecode } from "jwt-decode";
 import {
   useGetAllBookingsQuery,
   useGetFacilityPerUserQuery,
-  useGetUserQuery,
+  useGetSingleUserQuery,
 } from "@/redux/api/api"; // Import the queries
-
+import "react-datepicker/dist/react-datepicker.css"; // Import DatePicker styles
+import { PulseLoader } from "react-spinners"; // Add a loader package like react-spinners
 export default function AdminDashboard() {
-  interface CustomJwtPayload extends JwtPayload {
-    role?: string; // Optional role field
-    userId?: string; // Optional userId field
-    useremail?: string; // Optional useremail field
+  interface CustomJwtPayload {
+    role?: string;
+    userId?: string;
+    useremail?: string;
   }
 
   const token = useSelector((state: RootState) => state.auth.token);
-
   const user = token ? jwtDecode<CustomJwtPayload>(token) : null;
-
-  console.log(user);
-  const role: string = user?.role || "Guest"; // Access the role from the custom payload
-  const id: string = user?.useremail as string; // Ensure this matches the payload structure in verifyToken
-  console.log(id);
+  const role: string = user?.role || "Guest";
+  const id: string = user?.useremail as string;
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
-  // Fetch all bookings and user-specific bookings
-  const { data:allBookings, isLoading: allBookingsLoading } = useGetAllBookingsQuery(undefined);
+  const { data: allBookings, isLoading: allBookingsLoading } =
+    useGetAllBookingsQuery(undefined);
+  const { data: userBooking, isLoading: userBookingsLoading } =
+    useGetFacilityPerUserQuery(id);
+  const { data: userProfiles } = useGetSingleUserQuery(id);
+  console.log(userProfiles);
 
-
-
-
-
-
-  // const allBookings = data ?.data;
-
-  // const allBookings = data?.data;
-  const {
-    data: userBooking,
-
-    isLoading: userBookingsLoading,
-  } = useGetFacilityPerUserQuery(id); // Pass the id (user email) as the argument
-
-  const userBookings = userBooking?.data;
-  const { data: userProfiles } = useGetUserQuery(id as string);
-
-  const userProfile = (userProfiles  )?.data;
-
-  console.log(userProfile);
-
-  // Extract booked dates based on role
   const bookedDates: Date[] =
     role === "admin"
-      ? allBookings?.map((booking: any) => new Date(booking.date)) || []
-      : userBookings?.map((booking: any) => new Date(booking.date)) || [];
+      ? allBookings?.data.map((booking: any) => new Date(booking.date)) || []
+      : userBooking?.data.map((booking: any) => new Date(booking.date)) || [];
 
-  // Function to add the class to booked dates
-// Function to add the class to booked dates
-const dayClassName = (date: Date): string => {
-  const isBooked = bookedDates.some(
-    (bookedDate) =>
-      date.getFullYear() === bookedDate.getFullYear() &&
-      date.getMonth() === bookedDate.getMonth() &&
-      date.getDate() === bookedDate.getDate()
-  );
-  return isBooked ? "highlighted-date" : ""; // Ensure it always returns a string
-};
-
+  const dayClassName = (date: Date): string => {
+    const isBooked = bookedDates.some(
+      (bookedDate) =>
+        date.getFullYear() === bookedDate.getFullYear() &&
+        date.getMonth() === bookedDate.getMonth() &&
+        date.getDate() === bookedDate.getDate()
+    );
+    return isBooked ? "highlighted-date" : "";
+  };
 
   return (
     <>
-      <div className="text-center shadow-lg w-1/2 mx-auto mt-8 mb-8 p-5">
+      <div className="text-center shadow-lg mx-auto mt-8 mb-8 p-5 max-w-3xl">
         <h1 className="text-4xl font-bold mb-4">
-          Welcome to Your Dashboard{" "}
-          <span role="img" aria-label="wave">
-            👋
-          </span>
+          Welcome to Your Dashboard 👋
         </h1>
-        <div className="flex items-center justify-center space-x-2 text-xl mt-4">
+        <div className="flex flex-col md:flex-row justify-center items-center space-x-2 text-xl mt-4">
           <FaUserCog size={30} className="text-blue-500" />
           <span className="font-semibold text-2xl">
             Logged in as:{" "}
             <span className="text-green-600">
-              {role === "admin"
-                ? "🛠️ Admin"
-                : role === "user"
-                ? "👤 User"
-                : "Guest"}
+              {/* {role === "admin" ? "🛠️ Admin" : role === "user" ? "👤 User" : "Guest"} */}
+
+              {userProfiles?.data.name}
             </span>
           </span>
         </div>
       </div>
 
-      <div className="flex p-6 min-h-screen">
+      <div className="flex flex-col md:flex-row p-6 min-h-screen space-y-6 md:space-y-0 md:space-x-6">
         {/* Left Section - Actions */}
-        <div className="w-1/2 pr-4">
+        <div className="md:w-1/2">
           <h2 className="text-3xl font-bold mb-6">Actions</h2>
-          {role === "admin" && (
-            <div className="grid grid-cols-1 gap-4">
-              {/* Facility Management */}
-              <div className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300">
-                <FaBuilding size={40} className="text-indigo-500 mx-auto" />
-                <h3 className="text-xl font-semibold mt-4 text-center">
-                  Facility Management
-                </h3>
-                <p className="text-sm mt-2 text-center">
-                  Manage, update, add, or remove facilities.
-                </p>
-              </div>
+          <div className="grid grid-cols-1 gap-4">
+            {role === "admin" && (
+              <>
+                {/* Facility Management */}
+                <div className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300 flex flex-col items-center">
+                  <FaBuilding size={40} className="text-indigo-500" />
+                  <h3 className="text-xl font-semibold mt-4 text-center">
+                    Facility Management
+                  </h3>
+                  <p className="text-sm mt-2 text-center">
+                    Manage, update, add, or remove facilities.
+                  </p>
+                </div>
 
-              {/* See All Bookings */}
-              <div className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300">
-                <FaClipboardList
-                  size={40}
-                  className="text-yellow-500 mx-auto"
-                />
-                <h3 className="text-xl font-semibold mt-4 text-center">
-                  See All Bookings
-                </h3>
-                <p className="text-sm mt-2 text-center">
-                  View and manage all facility bookings.
-                </p>
-              </div>
+                {/* See All Bookings */}
+                <div className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300 flex flex-col items-center">
+                  <FaClipboardList size={40} className="text-yellow-500" />
+                  <h3 className="text-xl font-semibold mt-4 text-center">
+                    See All Bookings
+                  </h3>
+                  <p className="text-sm mt-2 text-center">
+                    View and manage all facility bookings.
+                  </p>
+                </div>
 
-              {/* Manage Users */}
-              <div className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300">
-                <FaUsers size={40} className="text-green-500 mx-auto" />
-                <h3 className="text-xl font-semibold mt-4 text-center">
-                  User Management
-                </h3>
-                <p className="text-sm mt-2 text-center">
-                  View, manage, and assign roles to users.
-                </p>
-              </div>
+                {/* Manage Users */}
+                <div className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300 flex flex-col items-center">
+                  <FaUsers size={40} className="text-green-500" />
+                  <h3 className="text-xl font-semibold mt-4 text-center">
+                    User Management
+                  </h3>
+                  <p className="text-sm mt-2 text-center">
+                    View, manage, and assign roles to users.
+                  </p>
+                </div>
 
-              {/* Add Admin */}
-              <div className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300">
-                <MdAddCircleOutline
-                  size={40}
-                  className="text-red-500 mx-auto"
-                />
-                <h3 className="text-xl font-semibold mt-4 text-center">
-                  Add Admin
-                </h3>
-                <p className="text-sm mt-2 text-center">
-                  Assign admin roles to trusted users.
-                </p>
-              </div>
-            </div>
-          )}
-          {role === "user" && (
-            <div className="grid grid-cols-1 gap-4">
-              {/* See All Own Bookings */}
-              <div className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300">
-                <FaClipboardList
-                  size={40}
-                  className="text-yellow-500 mx-auto"
-                />
+                {/* Add Admin */}
+                <div className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300 flex flex-col items-center">
+                  <MdAddCircleOutline size={40} className="text-red-500" />
+                  <h3 className="text-xl font-semibold mt-4 text-center">
+                    Add Admin
+                  </h3>
+                  <p className="text-sm mt-2 text-center">
+                    Assign admin roles to trusted users.
+                  </p>
+                </div>
+              </>
+            )}
+
+            {role === "user" && (
+              <div className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300 flex flex-col items-center">
+                <FaClipboardList size={40} className="text-yellow-500" />
                 <h3 className="text-xl font-semibold mt-4 text-center">
                   See All Own Bookings
                 </h3>
@@ -172,30 +134,29 @@ const dayClassName = (date: Date): string => {
                   View and manage all your facility bookings and cancel.
                 </p>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {/* Right Section - Date Picker Calendar */}
-        <div className="w-1/2 pl-4">
-          <h2 className="text-3xl text-orange-300 font-thin mb-6">
-            Here Is the Date Selected by User
-          </h2>
+        <div className="md:w-1/2">
+          <h2 className="text-3xl text-black font-thin mb-6">Selected Date</h2>
 
-          {/* Handle loading state */}
-          {allBookingsLoading && <p>Loading bookings...</p>}
+          {(allBookingsLoading || userBookingsLoading) && (
+            <div className="flex justify-center items-center h-screen bg-black">
+              <PulseLoader color="#A18549" size={15} />{" "}
+              {/* Customizable loader */}
+            </div>
+          )}
 
-          {userBookingsLoading && <p>Loading user bookings...</p>}
-
-          {/* Date Picker */}
           {!allBookingsLoading && !userBookingsLoading && (
             <div className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300">
               <DatePicker
                 selected={selectedDate}
                 onChange={(date) => setSelectedDate(date)}
                 inline
-                excludeDates={bookedDates} // Disable booked dates
-                dayClassName={dayClassName} // Apply custom class
+                excludeDates={bookedDates}
+                dayClassName={dayClassName}
               />
             </div>
           )}

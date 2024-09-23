@@ -1,12 +1,10 @@
- 
-
 function Banner() {
   return (
-    <div className=" items-center ">
-      <div className="flex w-full">
+    <div className="items-center">
+      <div className="flex flex-col md:flex-row w-full">
         {/* Left Section - Getting Here */}
         <div
-          className="relative w-1/2 h-96 bg-cover bg-center"
+          className="relative w-full md:w-1/2 h-96 bg-cover bg-center"
           style={{
             backgroundImage:
               "url('https://plus.unsplash.com/premium_photo-1671269943553-3781c823e625?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cm9vbSUyMHdhbGx8ZW58MHx8MHx8fDA%3D')",
@@ -36,7 +34,7 @@ function Banner() {
 
         {/* Right Section - Spend Your Time With Us */}
         <div
-          className="relative w-1/2 h-96 bg-cover bg-center"
+          className="relative w-full md:w-1/2 h-96 bg-cover bg-center"
           style={{
             backgroundImage:
               "url('https://plus.unsplash.com/premium_photo-1675616575351-8814fc2cfdda?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHJvb20lMjB3YWxsfGVufDB8fDB8fHww')",

@@ -5,17 +5,11 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Chip,
+ 
 } from "@nextui-org/react";
 import { useGetAllBookingsQuery } from "@/redux/api/api"; // Fixed typo here
 import { PulseLoader } from "react-spinners";
 
-// Mapping for booking status colors
-const statusColorMap: { [key: string]: "success" | "warning" | "danger" } = {
-  confirmed: "success",
-  pending: "warning",
-  canceled: "danger",
-};
 
 export default function ViewAllBooking() {
   // Fetch booking data from the API
@@ -49,7 +43,7 @@ export default function ViewAllBooking() {
           <TableColumn>Email</TableColumn>
           <TableColumn>Phone</TableColumn>
           <TableColumn>Payable Amount</TableColumn>
-          <TableColumn>Status</TableColumn>
+          
         </TableHeader>
         <TableBody>
           {bookingData?.data.map((item: any) => (
@@ -64,15 +58,7 @@ export default function ViewAllBooking() {
               <TableCell>{item.user.email}</TableCell>
               <TableCell>{item.user.phone}</TableCell>
               <TableCell>{item.payableAmount}</TableCell>
-              <TableCell>
-                <Chip
-                  color={statusColorMap[item.status]} // Assuming item.status is used for status
-                  size="sm"
-                  variant="flat"
-                >
-                  {item.status}
-                </Chip>
-              </TableCell>
+             
             </TableRow>
           ))}
         </TableBody>
@@ -97,14 +83,7 @@ export default function ViewAllBooking() {
             <p className="text-sm text-gray-600">Email: {item.user.email}</p>
             <p className="text-sm text-gray-600">Phone: {item.user.phone}</p>
             <p className="text-sm text-gray-600">Payable Amount: ${item.payableAmount}</p>
-            <Chip
-              color={statusColorMap[item.status]}
-              size="sm"
-              variant="flat"
-              className="mt-2"
-            >
-              {item.status}
-            </Chip>
+           
           </div>
         ))}
       </div>

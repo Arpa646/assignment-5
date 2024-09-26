@@ -16,6 +16,7 @@ export type Booking = {
     pricePerHour: number;
     location: string;
     isDeleted: boolean;
+    image:string
   };
   date: string;
   startTime: string;
@@ -77,7 +78,7 @@ console.log(bookingsData)
             {bookingsData &&
               bookingsData.map((booking: Booking) => (
                 <tr key={booking._id} className="bg-white even:bg-gray-100">
-                  <td className="px-4 py-2 text-left"><img className="w-20" src={booking.facility.image} alt="" srcset="" /></td>
+                  <td className="px-4 py-2 text-left"><img className="w-20" src={booking.facility.image} alt=""  /></td>
                   <td className="px-4 py-2 text-left">{booking.facility.name}</td>
 
 

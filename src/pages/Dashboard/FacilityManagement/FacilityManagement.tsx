@@ -197,45 +197,7 @@ const FacilityManagement = () => {
       </div>
 
       <h2 className="text-2xl font-bold mb-4">Facility List</h2>
-      {/* <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">Facility</th>
-              <th scope="col">Description</th>
-              <th scope="col">Price Per Hour</th>
-              <th scope="col">Location</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {facilitiesData &&
-              facilitiesData.data?.map((facility: Facility) => (
-                <tr key={facility._id}>
-                  <td>{facility.name}</td>
-                  <td>{facility.description}</td>
-                  <td>${facility.pricePerHour}</td>
-                  <td>{facility.location}</td>
-                  <td className="flex">
-                    <Button
-                      className="font-normal text-black border border-black bg-transparent rounded-none px-2 py-1 mr-2"
-                      onPress={() => handleEdit(facility)}
-                    >
-                      <CiEdit />
-                    </Button>
-                    <Button
-                      className="font-normal text-black border border-black transparent rounded-none px-2 py-1"
-                      onPress={() => handleDelete(facility._id!)}
-                    >
-                      <MdOutlineDeleteOutline />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-
-      </div> */}
+      
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200 table-auto">
           <thead className="bg-gray-50">

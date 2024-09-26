@@ -4,7 +4,7 @@ import {
   FaInstagram,
   FaPinterest,
 } from "react-icons/fa";
-
+import '@/App.css'
 const Footer = () => {
   return (
     <footer className="text-black p-9 mt-11">
@@ -138,6 +138,15 @@ const Footer = () => {
           </div>
         </div>
       </div>
+
+
+
+      <div class="container">
+    <div class="triangle-container">
+      <div class="triangle triangle-1"></div>
+      <div class="triangle triangle-2"></div>
+    </div>
+  </div>
     </footer>
   );
 };

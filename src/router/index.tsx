@@ -2,6 +2,7 @@ import MainLayout from "@/components/Layouts/MainLayouts";
 import Signup from "@/components/authentication/registration/Signup";
 import Login from "@/components/authentication/login/Login";
 import Home from "@/pages/Home/Home";
+import Home2 from "@/pages/Home2/Home2";
 import DashHome from "@/pages/Dashboard/DashHome";
 import ViewAllBooking from "@/pages/Dashboard/allBooking/ViewAllBooking";
 import FacilityList from "@/pages/FacilityList/FacilityList";
@@ -69,6 +70,11 @@ const router = createBrowserRouter([
         element: <NotFound />,
       },
     ],
+  },
+  {
+    path: "/home2", // Main route
+    element: <Home2 />,
+    
   },
 
   {

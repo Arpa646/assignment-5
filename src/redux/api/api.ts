@@ -2,11 +2,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Define types for API responses and requests
-interface Plant {
-  id: string;
-  name: string;
-  // other plant properties
-}
+
 
 interface RootState {
   auth: {
@@ -17,7 +13,10 @@ interface RootState {
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api",
+
+
+    
+    baseUrl: "https://assignment-ivory-two.vercel.app/api",
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
@@ -29,15 +28,9 @@ export const baseApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["plants", "facilities"],
+  tagTypes: ["facilities"],
   endpoints: (builder) => ({
-    getPlants: builder.query<Plant[], void>({
-      query: () => ({
-        url: "/plants",
-        method: "GET",
-      }),
-      providesTags: ["plants"],
-    }),
+   
     getAllBookings: builder.query({
       query: () => ({
         url: "/bookings",
@@ -56,7 +49,7 @@ export const baseApi = createApi({
         url: "/auth",
         method: "GET",
       }),
-      providesTags: ["facilities"],
+     
     }),
     addFacility: builder.mutation({
       query: (newFacility) => ({
@@ -64,6 +57,7 @@ export const baseApi = createApi({
         method: "POST",
         body: newFacility,
       }),
+      invalidatesTags: ["facilities"],
     }),
     updateFacility: builder.mutation({
       query: ({ id, updateData }) => ({
@@ -71,12 +65,14 @@ export const baseApi = createApi({
         method: "PUT",
         body: updateData,
       }),
+      invalidatesTags: ["facilities"],
     }),
     deleteFacility: builder.mutation({
       query: (id) => ({
         url: `facility/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["facilities"],
     }),
     getFacilityPerUser: builder.query({
       query: () => ({
@@ -90,7 +86,7 @@ export const baseApi = createApi({
         method: "POST",
         body: user,
       }),
-      invalidatesTags: ["plants"],
+     
     }),
     logIn: builder.mutation<void, { email: string; password: string }>({
       query: (user) => ({
@@ -98,7 +94,7 @@ export const baseApi = createApi({
         method: "POST",
         body: user,
       }),
-      invalidatesTags: ["plants"],
+     
     }),
     checkAvailability: builder.query({
       query: (date) => ({
@@ -111,6 +107,7 @@ export const baseApi = createApi({
         url: `/bookings/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["facilities"],
     }),
     getSingleFacility: builder.query({
       query: (id) => ({
@@ -133,6 +130,7 @@ export const baseApi = createApi({
         method: "POST",
         body: bookingData,
       }),
+      invalidatesTags: ["facilities"],
     }),
   }),
 });

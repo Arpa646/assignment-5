@@ -40,7 +40,7 @@ export default function FacilityHome() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {facilitiesData?.map((facility: Facility, index: number) => (
+          {facilitiesData?.slice(0, 3).map((facility: Facility, index: number) => (
             <div
               key={facility._id}
               className={`bg-[#151515] border border-[#A18549] p-6 rounded-lg shadow-md transition-transform transform ${

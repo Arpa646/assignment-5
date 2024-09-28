@@ -1,3 +1,9 @@
+
+## Live Demo
+Check out the live demo of the project here: [Live Demo](https://flourishing-stroopwafel-629c6d.netlify.app/)
+
+
+
 # Sports Facility Booking Platform
 
 A modern, user-friendly platform designed to allow users to book sports facilities seamlessly. This platform provides a smooth booking experience with various features for both users and admins, including facility management, booking management, and payment integration.

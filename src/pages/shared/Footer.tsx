@@ -4,7 +4,7 @@ import {
   FaInstagram,
   FaPinterest,
 } from "react-icons/fa";
-import '@/App.css'
+import "@/App.css";
 const Footer = () => {
   return (
     <footer className="text-black p-9 mt-11">
@@ -111,9 +111,7 @@ const Footer = () => {
           </ul>
         </div>
         <div>
-          <h3 className="border-b-2 border-white pb-2 mb-4">
-            STAY CONNECTED
-          </h3>
+          <h3 className="border-b-2 border-white pb-2 mb-4">STAY CONNECTED</h3>
           <p className="mb-4 text-slate-500">
             Stay updated with our latest offers, sports tips, and facility news.
           </p>
@@ -139,14 +137,12 @@ const Footer = () => {
         </div>
       </div>
 
-
-
-      <div class="container">
-    <div class="triangle-container">
-      <div class="triangle triangle-1"></div>
-      <div class="triangle triangle-2"></div>
-    </div>
-  </div>
+      <div className="container">
+        <div className="triangle-container">
+          <div className="triangle triangle-1"></div>
+          <div className="triangle triangle-2"></div>
+        </div>
+      </div>
     </footer>
   );
 };

@@ -45,8 +45,8 @@ const AddAdmin: React.FC = () => {
 
           {/* Name Input */}
           <div className="w-full lg:w-[500px] flex flex-col items-center">
-            <div className="space-y-2 w-full">
-              <h1 className="text-sm">
+            <div className="space-y-2 w-full text-start">
+              <h1 className="text-sm ">
                 PLEASE ENTER YOUR NAME
                 <span style={{ color: "red" }}>* </span>
               </h1>
@@ -57,15 +57,16 @@ const AddAdmin: React.FC = () => {
                 style={{ border: "1px solid #A4B0B1", borderRadius: "4px" }}
                 type="text"
                 placeholder="Your name"
-                className="hover:border-sky-700 input-bordered h-9 w-full"
+                className="hover:border-sky-700 input-bordered h-9  p-3
+                 w-full"
               />
             </div>
           </div>
 
           {/* Email Input */}
           <div className="w-full lg:w-[500px] flex flex-col items-center">
-            <div className="space-y-2 w-full">
-              <h1 className="text-sm">
+            <div className="space-y-2 w-full text-start ">
+              <h1 className=" text-sm">
                 PLEASE ENTER YOUR EMAIL ADDRESS
                 <span style={{ color: "red" }}>* </span>
               </h1>
@@ -76,14 +77,14 @@ const AddAdmin: React.FC = () => {
                 style={{ border: "1px solid #A4B0B1", borderRadius: "4px" }}
                 type="email"
                 placeholder="Your email"
-                className="hover:border-sky-700 input-bordered h-9 w-full"
+                className="hover:border-sky-700 input-bordered h-9  p-3 w-full"
               />
             </div>
           </div>
 
           {/* Password Input */}
           <div className="w-full lg:w-[500px] flex flex-col items-center">
-            <div className="space-y-2 w-full">
+            <div className="space-y-2 text-start w-full">
               <h1 className="text-sm">
                 PLEASE ENTER YOUR PASSWORD
                 <span style={{ color: "red" }}>* </span>
@@ -95,14 +96,14 @@ const AddAdmin: React.FC = () => {
                 style={{ border: "1px solid #A4B0B1", borderRadius: "4px" }}
                 type="password"
                 placeholder="Your password"
-                className="hover:border-sky-500 input-bordered h-9 w-full"
+                className="hover:border-sky-500 input-bordered h-9 p-3 w-full"
               />
             </div>
           </div>
 
           {/* Phone Input */}
           <div className="w-full lg:w-[500px] flex flex-col items-center">
-            <div className="space-y-2 w-full">
+            <div className="space-y-2 text-start w-full">
               <h1 className="text-sm">
                 PLEASE ENTER YOUR PHONE NUMBER
                 <span style={{ color: "red" }}>* </span>
@@ -114,14 +115,14 @@ const AddAdmin: React.FC = () => {
                 style={{ border: "1px solid #A4B0B1", borderRadius: "4px" }}
                 type="tel"
                 placeholder="Your phone number"
-                className="hover:border-sky-500 input-bordered h-9 w-full"
+                className="hover:border-sky-500 input-bordered h-9 p-3  w-full"
               />
             </div>
           </div>
 
           {/* Address Input */}
           <div className="w-full lg:w-[500px] flex flex-col items-center">
-            <div className="space-y-2 w-full">
+            <div className="space-y-2 text-start w-full">
               <h1 className="text-sm">
                 PLEASE ENTER YOUR ADDRESS
                 <span style={{ color: "red" }}>* </span>
@@ -133,7 +134,7 @@ const AddAdmin: React.FC = () => {
                 style={{ border: "1px solid #A4B0B1", borderRadius: "4px" }}
                 type="text"
                 placeholder="Your address"
-                className="hover:border-sky-500 input-bordered h-9 w-full"
+                className="hover:border-sky-500 input-bordered h-9 p-3 w-full"
               />
             </div>
           </div>
@@ -145,16 +146,16 @@ const AddAdmin: React.FC = () => {
                 type="submit"
                 value={isLoading ? "Signing Up..." : "Sign Up"}
                 disabled={isLoading}
-                className="input hover:bg-sky-500 h-9 font-semibold text-white w-full pl-10"
+                className="input hover:bg-[#7c6d5a] h-9 font-semibold text-white w-full pl-10"
                 style={{
-                  backgroundColor: "#3CB95D",
+                  backgroundColor: "#7c6d5a",
                   borderRadius: "4px",
                 }}
               />
             </div>
           </div>
 
-          {isSuccess && <p className="text-green-600">User registered successfully!</p>}
+          {isSuccess && <p className="text-[#655846]">User registered successfully!</p>}
           {error && <p className="text-red-600">Failed to register user. Please try again.</p>}
 
           {/* Link to Login */}

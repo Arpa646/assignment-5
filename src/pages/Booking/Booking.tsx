@@ -3,48 +3,38 @@ import {
   useCheckAvailabilityQuery,
   useAddBookingMutation,
 } from "@/redux/api/api"; // Import mutation hook
-//import { useNavigate } from "react-router-dom"; // For navigation to booking confirmation
 import { useLocation } from "react-router-dom";
+
 const Booking = () => {
-
-
   const location = useLocation();
-  const { facility } = location.state || {}; 
+  const { facility } = location.state || {}; // Fetch facility details from location
 
- 
   const [date, setDate] = useState<string>(""); // State to store selected date
   const [selectedSlot, setSelectedSlot] = useState<{
     startTime: string;
     endTime: string;
   } | null>(null); // State for selected slot
-  const facilityId = facility._id; // Facility ID (replace with dynamic value if needed)
-  // const navigate = useNavigate(); // To navigate to booking confirmation page
+  const [shouldFetchAvailability, setShouldFetchAvailability] = useState(false); // To trigger availability check
+  const [hasChecked, setHasChecked] = useState(false); // Tracks whether the user has clicked "Check Availability"
 
-  // Use the query hook with the date parameter and skip fetching if date is not provided
+  const facilityId = facility?._id; // Facility ID
+
+  // Use the query hook to fetch availability when the "Check Availability" button is clicked
   const { data, error, isLoading } = useCheckAvailabilityQuery(date, {
-    skip: !date, // Skip fetching if date is empty
+    skip: !shouldFetchAvailability || !date, // Fetch only when 'Check Availability' is clicked and date is provided
   });
 
-  // interface AvailabilityResponse {
-  //   data: any; // Replace `any` with the actual type if known
-  // }
-
-  // // Assume `useCheckAvailabilityQuery` is the query hook
-  // const { data } = useCheckAvailabilityQuery(date);
-
-  const availableslot = data?.data;
-
-  // const availableslot=data?.data
+  const availableslot = data?.data || []; // Fallback to empty array if no data
 
   // Mutation hook to add booking
-  const [
-    addBooking,
-    { isLoading: bookingLoading, error: bookingError,},
-  ] = useAddBookingMutation();
+  const [addBooking, { isLoading: bookingLoading, error: bookingError }] =
+    useAddBookingMutation();
 
   // Handle date change
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDate(e.target.value);
+    setShouldFetchAvailability(false); // Reset availability on date change
+    setHasChecked(false); // Reset "has checked" when date changes
   };
 
   // Handle slot selection and log the selected slot times
@@ -58,20 +48,10 @@ const Booking = () => {
     );
   };
 
-  // Create an interface for the booking data
-  interface BookingData {
-    booking: {
-      facility: string; // Assuming facilityId is a string
-      date: string; // Assuming date is a string (could also be Date if using Date objects)
-      startTime: string; // Assuming time is a string
-      endTime: string; // Assuming time is a string
-    };
-  }
-
   // Confirm booking using mutation
   const handleConfirmBooking = async () => {
-    if (selectedSlot) {
-      const bookingData: BookingData = {
+    if (selectedSlot && facilityId) {
+      const bookingData = {
         booking: {
           facility: facilityId, // Set the facility ID
           date: date, // Selected date
@@ -80,17 +60,13 @@ const Booking = () => {
         },
       };
 
-      console.log('this is booking data',bookingData);
       try {
         // Call the mutation to add booking
-        const response = await addBooking(bookingData).unwrap(); // Unwrap the result to handle the response
+        const response = await addBooking(bookingData).unwrap();
         console.log("Booking Success:", response);
 
-       console.log("booik", response);
-         window.location.href = response.data.payment_url;
-
-        // Navigate to the booking confirmation page
-        // navigate(`/confirm-booking`, { state: bookingData });
+        // Redirect to payment page
+        window.location.href = response.data.payment_url;
       } catch (err) {
         console.error("Booking Error:", err);
       }
@@ -99,51 +75,103 @@ const Booking = () => {
     }
   };
 
-  
-  return (
-    <div>
-      <div
-        // style={{ backgroundColor: "rgb(47,58,49)" }}
-        className="bg-white shadow-lg w-full lg:w-2/4 mx-auto mt-8 p-6 rounded-lg"
-      >
-        <h1 className="text-3xl font-bold text-center mb-4">Booking Page</h1>
+  // Handle availability check button click
+  const handleCheckAvailability = () => {
+    if (date) {
+      console.log("Selected Date:", date); // Log selected date
+      setShouldFetchAvailability(true); // Trigger availability check
+      setHasChecked(true); // Mark that the user has checked availability
+    } else {
+      alert("Please select a date.");
+    }
+  };
 
-        <div style={{ border: " 1px solid #A18549" }} className="mb-4">
-          <input
-            className="border px-4 py-2 w-full"
-            type="date"
-            value={date}
-            onChange={handleDateChange}
-            placeholder="Select Date"
-          />
+  return (
+    <div className="flex gap-2 flex-col lg:flex-row">
+      {/* Facility Details Section */}
+      <div className="bg-white shadow-lg w-full lg:w-2/4 items-center mx-auto mt-8 p-6 rounded-lg">
+        <h1 className="text-2xl font-bold text-center mb-4">
+          You have selected this Facility for booking
+        </h1>
+        {facility ? (
+          <div className="mb-4">
+            <h2 className="text-2xl font-semibold">{facility.name}</h2>
+            <p className="mt-2">{facility.description}</p>
+            <p className="mt-2">
+              <strong>Location:</strong> {facility.location}
+            </p>
+            <p className="mt-2">
+              <strong>Price Per Hour:</strong> {facility.pricePerHour}
+            </p>
+          </div>
+        ) : (
+          <p>No facility details available.</p>
+        )}
+      </div>
+
+      {/* Booking Section */}
+      <div className="bg-white shadow-lg w-full lg:w-2/4 mx-auto mt-8 p-6 rounded-lg">
+        <h1 className="text-2xl font-bold text-center mb-4">Booking Now</h1>
+
+        {/* Date Selection */}
+        <div className="flex justify-between">
+          <div style={{ border: "1px solid #A18549" }} className="mb-4">
+            <input
+              className="border px-4 py-2 lg:w-[300px] w-[250px]"
+              type="date"
+              value={date}
+              onChange={handleDateChange}
+              placeholder="Select Date"
+            />
+          </div>
+
+          {/* Check Availability Button */}
+          <button
+            style={{ border: "1px solid #A18549" }}
+            className="text-black px-4 py-2 mb-4"
+            onClick={handleCheckAvailability}
+          >
+            Check
+          </button>
         </div>
 
-        <button
-          style={{ border: " 1px solid #A18549" }}
-          className=" text-black px-4 py-2  mb-4"
-          onClick={() => setDate(date)} // Trigger query when date is set
-        >
-          Check Availability
-        </button>
-
         {isLoading && <p>Loading...</p>}
-        {error && <p>Error checking availability</p>}
-        {data && availableslot && availableslot.length > 0 && (
+
+        {/* Error Handling */}
+        {error && (
+          <div className="bg-red-100 border border-red-500 text-red-700 px-4 py-3 rounded relative mt-4">
+            <span className="block sm:inline">
+          No Slot Available Please try another day
+            </span>
+          </div>
+        )}
+
+        {/* Display message if no available slots after checking availability */}
+        {!error && hasChecked && availableslot.length === 0 && (
+          <div className="bg-red-100 border border-red-500 text-red-700 px-4 py-3 rounded relative mt-4">
+            <span className="block sm:inline">
+              No available slots on this date. Please try another date.
+            </span>
+          </div>
+        )}
+
+        {/* Display available slots after checking availability */}
+        {!error && hasChecked && availableslot.length > 0 && (
           <div>
-            <h2 className="text-xl  mb-2">
+            <h2 className="text-xl mb-2">
               Available Slots <br />
-              You can direct book for this date by selecting any slot
+              You can book for this date by selecting any slot
             </h2>
             <div className="grid grid-cols-2 gap-4">
-              {availableslot?.map(
+              {availableslot.map(
                 (
                   slot: { startTime: string; endTime: string },
                   index: number
                 ) => (
                   <button
-                    style={{ border: " 1px solid #A18549" }}
                     key={index}
-                    className={`border px-4 py-2  ${
+                    style={{ border: "1px solid #A18549" }}
+                    className={`border px-4 py-2 ${
                       selectedSlot?.startTime === slot.startTime &&
                       selectedSlot?.endTime === slot.endTime
                         ? "bg-[#A18549] text-white"
@@ -172,7 +200,10 @@ const Booking = () => {
               {bookingLoading ? "Booking..." : "Confirm Booking"}
             </button>
             {bookingError && (
-              <p className="text-red-500">Error occurred while booking.</p>
+              <p className="text-red-500">
+                Error occurred while booking
+              
+              </p>
             )}
           </div>
         )}

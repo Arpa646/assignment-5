@@ -3,7 +3,6 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Define types for API responses and requests
 
-
 interface RootState {
   auth: {
     token: string;
@@ -13,9 +12,8 @@ interface RootState {
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
+    //https://assignment-ivory-two.vercel.app/api
 
-
-    
     baseUrl: "https://assignment-ivory-two.vercel.app/api",
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
@@ -28,9 +26,8 @@ export const baseApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["facilities"],
+  tagTypes: ["facilities", "user"],
   endpoints: (builder) => ({
-   
     getAllBookings: builder.query({
       query: () => ({
         url: "/bookings",
@@ -49,7 +46,6 @@ export const baseApi = createApi({
         url: "/auth",
         method: "GET",
       }),
-     
     }),
     addFacility: builder.mutation({
       query: (newFacility) => ({
@@ -79,6 +75,7 @@ export const baseApi = createApi({
         url: "/bookings/user",
         method: "GET",
       }),
+      providesTags: ["user"],
     }),
     signUp: builder.mutation({
       query: (user) => ({
@@ -86,15 +83,13 @@ export const baseApi = createApi({
         method: "POST",
         body: user,
       }),
-     
     }),
-    logIn: builder.mutation<void, { email: string; password: string }>({
+    logIn: builder.mutation({
       query: (user) => ({
         url: "/auth/login",
         method: "POST",
         body: user,
       }),
-     
     }),
     checkAvailability: builder.query({
       query: (date) => ({
@@ -102,13 +97,14 @@ export const baseApi = createApi({
         method: "GET",
       }),
     }),
-    cancelBooking: builder.mutation<void, string>({
+    cancelBooking: builder.mutation({
       query: (id) => ({
         url: `/bookings/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["facilities"],
+      invalidatesTags: ["user", "facilities"], // Change this line
     }),
+    
     getSingleFacility: builder.query({
       query: (id) => ({
         url: `/facility/${id}`,

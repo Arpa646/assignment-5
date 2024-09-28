@@ -56,8 +56,15 @@ export default function AdminDashboard() {
     <>
       <div className="text-center shadow-lg mx-auto mt-8 mb-8 p-5 max-w-3xl">
         <h1 className="text-4xl font-bold mb-4">
-          Welcome to Your Dashboard 👋
+          Welcome to Your Dashboard 👋 
         </h1>
+        {role === "admin" && (
+              <div className="p-6 bg-white  rounded-lg  transition-shadow duration-300 flex flex-col items-center">
+               As you are Admin so YOu have more acces than other users
+               
+              </div>
+              
+            )}
         <div className="flex flex-col md:flex-row justify-center items-center space-x-2 text-xl mt-4">
           <FaUserCog size={30} className="text-blue-500" />
           <span className="font-semibold text-2xl">
@@ -140,7 +147,7 @@ export default function AdminDashboard() {
 
         {/* Right Section - Date Picker Calendar */}
         <div className="md:w-1/2">
-          <h2 className="text-3xl text-black font-thin mb-6">Selected Date</h2>
+          <h2 className="text-3xl text-black font-thin mb-6">Booked Date</h2>
 
           {(allBookingsLoading || userBookingsLoading) && (
             <div className="flex justify-center items-center h-screen bg-black">

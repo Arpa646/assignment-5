@@ -1,30 +1,66 @@
-# React + TypeScript + Vite
+# Sports Facility Booking Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, user-friendly platform designed to allow users to book sports facilities seamlessly. This platform provides a smooth booking experience with various features for both users and admins, including facility management, booking management, and payment integration.
 
-Currently, two official plugins are available:
+## Table of Contents
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
+- [Screenshots](#screenshots)
+- [Future Enhancements](#future-enhancements)
+- [Contributing](#contributing)
+- [License](#license)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+### Landing Page
+- **Header**: Logo, navigation menu, login/registration buttons.
+- **Hero Section**: Eye-catching banner with a "Book Now" CTA.
+- **Featured Facilities**: Highlight popular facilities.
+- **How It Works**: Step-by-step guide to booking.
+- **Customer Testimonials**: Slider with feedback from users.
+- **Unique Section**: Custom component showcasing creativity.
+- **Footer**: Links to important pages.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Dashboard
+- **User Dashboard**: Manage bookings, view personalized content.
+- **Admin Dashboard**: Manage facilities, bookings, and users.
+- **Facility Management**: CRUD operations on sports facilities, with image upload support.
+- **Booking Management**: View and manage bookings.
 
-- Configure the top-level `parserOptions` property like this:
+### Login/Registration
+- **Login**: Form with email and password.
+- **Registration**: Form with fields for name, email, password, and other details.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### Facility Listing & Details
+- **Facility Listing**: Search, filter, and paginate through facilities.
+- **Facility Details**: Detailed information and booking options for each facility.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Booking Page
+- **Availability Checker**: Check availability by date and facility.
+- **Payment Integration**: Support for SSL Commerz/AmarPay.
+
+### Error Pages
+- **404 Page**: Custom page for non-existent routes.
+- **Unauthorized Access**: Custom message for unauthorized access.
+
+### UI/UX
+- Clean, modern design with responsive support for all devices.
+- Scroll to Top Button for better navigation.
+- Consistent error handling with Toast notifications.
+
+## Tech Stack
+- **Frontend**: React, Tailwind CSS, Swiper.js (for sliders)
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB
+- **Payment Integration**: SSL Commerz/AmarPay
+- **Authentication**: JWT (JSON Web Tokens)
+- **Hosting**: Vercel, Netlify
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/sports-facility-booking-platform.git

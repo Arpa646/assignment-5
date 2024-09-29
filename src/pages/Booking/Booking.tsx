@@ -4,7 +4,7 @@ import {
   useAddBookingMutation,
 } from "@/redux/api/api"; // Import mutation hook
 import { useLocation } from "react-router-dom";
-
+import { PulseLoader } from "react-spinners"; 
 const Booking = () => {
   const location = useLocation();
   const { facility } = location.state || {}; // Fetch facility details from location
@@ -135,7 +135,9 @@ const Booking = () => {
           </button>
         </div>
 
-        {isLoading && <p>Loading...</p>}
+        {isLoading &&  <div className="flex justify-center items-center h-screen bg-black">
+        <PulseLoader color="#A18549" size={15} /> {/* Customizable loader */}
+      </div> }
 
         {/* Error Handling */}
         {error && (

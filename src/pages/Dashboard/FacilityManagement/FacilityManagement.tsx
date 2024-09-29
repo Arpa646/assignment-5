@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+
 import {
   useGetFacilitiesQuery,
   useDeleteFacilityMutation,
   useAddFacilityMutation,
   useUpdateFacilityMutation,
+  
 } from "@/redux/api/api";
 
 import Swal from "sweetalert2";
@@ -45,7 +47,7 @@ const FacilityManagement = () => {
     description: "Outdoor tennis court with synthetic surface.",
     pricePerHour: 400,
     location: "456 Sports Ave, Springfield",
-    image: "", // Initialize image with an empty string
+    image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c3BvcnR8ZW58MHx8MHx8fDA%3D", // Initialize image with an empty string
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -132,6 +134,7 @@ const FacilityManagement = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         deleteFacility(id)
+
           .unwrap()
           .then(() => {
             Swal.fire("Deleted!", "Your facility has been deleted.", "success");
@@ -141,6 +144,9 @@ const FacilityManagement = () => {
             console.error("Failed to delete the facility:", error);
           });
       }
+
+  
+
     });
   };
 
